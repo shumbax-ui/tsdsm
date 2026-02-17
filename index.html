@@ -1,0 +1,1750 @@
+<!--
+╔══════════════════════════════════════════════════════════════╗
+║          TSD SATU MARE — VERSIUNE ÎMBUNĂTĂȚITĂ              ║
+║  Gata pentru upload pe Netlify                              ║
+╠══════════════════════════════════════════════════════════════╣
+║  PAȘI NETLIFY:                                              ║
+║  1. Redenumește fișierul în index.html                      ║
+║  2. Mergi la https://app.netlify.com/drop                   ║
+║  3. Trage folderul cu index.html (sau fișierul singur)      ║
+║  4. Gata! Primești link xyz.netlify.app                     ║
+╠══════════════════════════════════════════════════════════════╣
+║  ✏️ EDIT_EMAIL    → înlocuiește cu emailul real             ║
+║  ✏️ EDIT_TELEFON  → înlocuiește cu telefonul real           ║
+║  ✏️ EDIT_ADRESA   → înlocuiește cu adresa sediului          ║
+║  ✏️ EDIT_FB       → link pagina Facebook reală              ║
+║  ✏️ EDIT_IG       → link pagina Instagram reală             ║
+║  ✏️ EDIT_TT       → link pagina TikTok reală                ║
+╚══════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>TSD Satu Mare — Tineretul Social Democrat</title>
+<meta name="description" content="Tineretul Social Democrat Satu Mare — premianți la Gala TSD România 2023 pentru cele mai multe acțiuni caritabile. 250+ tineri activi. Alătură-te mișcării!"/>
+<meta property="og:title" content="TSD Satu Mare — Schimbăm împreună"/>
+<meta property="og:description" content="Premianți la Gala TSD România 2023. 250+ tineri activi. Caritabil, educație, antreprenoriat. Vino cu noi!"/>
+<meta property="og:type" content="website"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Tineretul Social Democrat Satu Mare","alternateName":"TSD Satu Mare","description":"Organizația de tineret a PSD Satu Mare, premiată în 2023 pentru cele mai multe acțiuni caritabile la nivel național.","address":{"@type":"PostalAddress","addressLocality":"Satu Mare","addressRegion":"SM","addressCountry":"RO"},"memberOf":{"@type":"Organization","name":"Tineretul Social Democrat România"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ===== RESET ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:#080C10;color:#EEE9E2;overflow-x:hidden;line-height:1.6}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;font-family:inherit}
+:focus-visible{outline:2px solid #D4AF37;outline-offset:3px;border-radius:3px}
+
+/* ===== VARIABLES ===== */
+:root{
+  --red:#C01830;
+  --red-deep:#8A0018;
+  --red-glow:rgba(192,24,48,.35);
+  --gold:#D4AF37;
+  --gold-light:#F0D060;
+  --gold-pale:#F7E9A0;
+  --cream:#EEE9E2;
+  --dark:#080C10;
+  --dark-2:#0F141A;
+  --dark-3:#161D26;
+  --dark-4:#1E2735;
+  --dark-5:#252F3F;
+  --muted:#6B7A8D;
+  --border:rgba(255,255,255,.07);
+  --border-accent:rgba(212,175,55,.15);
+  --ff-display:'Oswald',sans-serif;
+  --ff-serif:'Playfair Display',serif;
+  --ff-body:'DM Sans',sans-serif;
+  --container:1200px;
+  --gap:clamp(16px,4vw,32px);
+  --r:6px;
+  --r-lg:12px;
+  --transition:.25s cubic-bezier(.4,0,.2,1);
+}
+
+/* ===== UTILS ===== */
+.container{width:100%;max-width:var(--container);margin:0 auto;padding:0 var(--gap)}
+.section{padding:clamp(80px,11vw,130px) 0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.tag{display:inline-block;font-family:var(--ff-display);font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.h1{font-family:var(--ff-display);font-size:clamp(3rem,7vw,6.5rem);font-weight:700;line-height:.92;letter-spacing:-.01em;color:var(--cream)}
+.h2{font-family:var(--ff-display);font-size:clamp(2rem,4.5vw,3.8rem);font-weight:700;line-height:1;color:var(--cream)}
+.h3{font-family:var(--ff-display);font-size:clamp(1.2rem,2.5vw,1.7rem);font-weight:600;line-height:1.15;color:var(--cream)}
+.body-text{font-size:1rem;color:rgba(238,233,226,.6);line-height:1.85;max-width:560px}
+.gold{color:var(--gold)}
+.red{color:var(--red)}
+.italic{font-family:var(--ff-serif);font-style:italic}
+.text-center{text-align:center}
+.text-muted{color:var(--muted)}
+
+/* ===== NOISE ===== */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.35}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-display);font-weight:600;font-size:.82rem;letter-spacing:.13em;text-transform:uppercase;padding:14px 28px;border-radius:var(--r);border:2px solid transparent;transition:all var(--transition);white-space:nowrap;line-height:1}
+.btn-primary{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-primary:hover{background:var(--red-deep);border-color:var(--red-deep);transform:translateY(-2px);box-shadow:0 8px 32px var(--red-glow)}
+.btn-gold{background:var(--gold);color:var(--dark);border-color:var(--gold)}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 32px rgba(212,175,55,.35)}
+.btn-outline{background:transparent;color:var(--cream);border-color:rgba(238,233,226,.25)}
+.btn-outline:hover{border-color:var(--cream);background:rgba(238,233,226,.07)}
+.btn-outline-gold{background:transparent;color:var(--gold);border-color:var(--gold)}
+.btn-outline-gold:hover{background:rgba(212,175,55,.1);transform:translateY(-2px)}
+.btn-sm{padding:9px 16px;font-size:.72rem}
+.btn-lg{padding:18px 44px;font-size:.95rem;letter-spacing:.15em}
+.btn-full{width:100%;justify-content:center}
+
+/* ===== COOKIE BANNER ===== */
+#cookie-banner{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:10000;background:#141C24;border:1px solid var(--border-accent);border-radius:14px;padding:22px 26px;max-width:660px;width:calc(100% - 32px);display:flex;gap:20px;align-items:center;flex-wrap:wrap;box-shadow:0 24px 80px rgba(0,0,0,.7);transition:transform .4s,opacity .4s}
+#cookie-banner.hidden{transform:translateX(-50%) translateY(160px);opacity:0;pointer-events:none}
+.cookie-text p:first-child{font-weight:600;margin-bottom:4px;font-size:.9rem}
+.cookie-text p:last-child{font-size:.8rem;color:var(--muted)}
+.cookie-text a{color:var(--gold);text-decoration:underline}
+.cookie-btns{display:flex;gap:8px;flex-shrink:0}
+
+/* ===== ALERT ===== */
+#alert{background:linear-gradient(90deg,var(--red-deep) 0%,var(--red) 60%,#A01028 100%);padding:11px var(--gap);display:flex;align-items:center;justify-content:center;gap:12px;font-size:.84rem;font-weight:500;position:relative;letter-spacing:.02em}
+#alert.hidden{display:none}
+#alert-close{position:absolute;right:16px;background:none;border:none;color:#fff;opacity:.65;font-size:1.3rem;line-height:1;transition:opacity var(--transition)}
+#alert-close:hover{opacity:1}
+
+/* ===== HEADER ===== */
+.site-header{position:sticky;top:0;z-index:1000;background:rgba(8,12,16,.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);transition:all var(--transition)}
+.site-header.scrolled{background:rgba(8,12,16,.97);border-bottom-color:rgba(192,24,48,.2)}
+.header-inner{height:66px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.logo-badge{background:var(--red);color:#fff;font-family:var(--ff-display);font-weight:700;font-size:1.1rem;padding:5px 9px;border-radius:5px;letter-spacing:.06em}
+.logo-name{font-family:var(--ff-display);font-size:1.05rem;font-weight:500;color:var(--cream);letter-spacing:.04em}
+.logo-divider{width:1px;height:20px;background:rgba(255,255,255,.15)}
+.logo-tagline{font-size:.72rem;color:var(--muted);letter-spacing:.06em;display:none}
+@media(min-width:1000px){.logo-tagline{display:block}}
+.main-nav{display:none}
+@media(min-width:900px){.main-nav{display:flex;gap:2px;align-items:center}}
+.nav-link{font-family:var(--ff-display);font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(238,233,226,.55);padding:8px 12px;border-radius:var(--r);transition:color var(--transition),background var(--transition)}
+.nav-link:hover,.nav-link.active{color:var(--cream);background:rgba(255,255,255,.07)}
+.header-cta{display:flex;gap:10px;align-items:center}
+.hamburger{display:flex;flex-direction:column;gap:5px;background:none;border:none;padding:8px;border-radius:var(--r)}
+.hamburger-bar{width:22px;height:2px;background:var(--cream);border-radius:1px;transition:all var(--transition)}
+.hamburger.open .hamburger-bar:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open .hamburger-bar:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open .hamburger-bar:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(min-width:900px){.hamburger{display:none}}
+.mobile-menu{position:fixed;inset:66px 0 0 0;background:var(--dark-2);z-index:999;padding:36px var(--gap);transform:translateX(110%);transition:transform .38s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+.mobile-menu.open{transform:translateX(0)}
+.mobile-nav-list{display:flex;flex-direction:column;gap:2px;margin-bottom:32px}
+.mobile-nav-link{display:block;font-family:var(--ff-display);font-size:1.9rem;font-weight:700;color:rgba(238,233,226,.7);padding:14px 0;border-bottom:1px solid var(--border);letter-spacing:.04em;text-transform:uppercase;transition:color var(--transition),padding-left var(--transition)}
+.mobile-nav-link:hover{color:var(--gold);padding-left:14px}
+.mobile-social{display:flex;gap:12px;margin-top:24px}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:96vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+@media(max-width:860px){.hero{grid-template-columns:1fr;min-height:100svh}}
+.hero-left{position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(48px,8vw,100px) clamp(24px,5vw,80px) clamp(48px,8vw,80px);background:var(--dark-2);z-index:2}
+.hero-left::before{content:'';position:absolute;top:0;right:-55px;width:110px;height:100%;background:var(--dark-2);transform:skewX(-3deg);z-index:3}
+.hero-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.hero-dot{width:9px;height:9px;background:var(--gold);border-radius:50%;animation:pulse 2.5s ease infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,.6)}50%{box-shadow:0 0 0 12px rgba(212,175,55,0)}}
+.hero-eyebrow-text{font-family:var(--ff-display);font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(238,233,226,.45)}
+.hero-title{font-family:var(--ff-display);font-size:clamp(3.4rem,7vw,7rem);font-weight:700;line-height:.9;color:var(--cream);margin-bottom:10px;letter-spacing:-.01em}
+.hero-title-italic{display:block;font-family:var(--ff-serif);font-style:italic;font-weight:400;font-size:clamp(2rem,5vw,4.8rem);color:var(--gold);line-height:1.1;margin-bottom:36px}
+.hero-desc{font-size:1.02rem;color:rgba(238,233,226,.58);line-height:1.85;margin-bottom:44px;max-width:440px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:64px}
+.hero-stats{display:flex;gap:36px;border-top:1px solid var(--border);padding-top:36px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column}
+.hero-stat-num{font-family:var(--ff-display);font-size:2.2rem;font-weight:700;color:var(--cream);line-height:1}
+.hero-stat-label{font-size:.72rem;color:var(--muted);letter-spacing:.09em;text-transform:uppercase;margin-top:5px}
+.hero-right{position:relative;overflow:hidden}
+@media(max-width:860px){.hero-right{height:42vh;order:-1}}
+.hero-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 1.5s ease,transform 12s ease;opacity:0;transform:scale(1.08)}
+.hero-img.active{opacity:1;transform:scale(1)}
+.hero-right-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--dark-2) 0%,transparent 35%,rgba(0,0,0,.3) 100%);z-index:2}
+.hero-badge{position:absolute;bottom:36px;right:36px;z-index:3;background:var(--gold);color:var(--dark);padding:18px 22px;border-radius:var(--r);text-align:center;transform:rotate(2.5deg);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.hero-badge-num{font-family:var(--ff-display);font-size:2rem;font-weight:700;line-height:1}
+.hero-badge-text{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.slider-dots{display:flex;gap:8px;margin-top:28px}
+.slider-dot{width:28px;height:3px;background:rgba(255,255,255,.18);border:none;border-radius:2px;transition:all var(--transition);padding:0}
+.slider-dot.active{background:var(--gold);width:48px}
+
+/* ===== PRIZE BANNER ===== */
+.prize-banner{background:linear-gradient(135deg,var(--red-deep) 0%,var(--red) 55%,#A01020 100%);padding:clamp(36px,6vw,64px) 0;position:relative;overflow:hidden}
+.prize-banner::before{content:'🏆';position:absolute;right:-10px;top:-40px;font-size:clamp(90px,14vw,180px);opacity:.07;transform:rotate(-12deg);pointer-events:none}
+.prize-inner{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.prize-trophy{font-size:clamp(3rem,6vw,5.5rem);flex-shrink:0;animation:float 3.2s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(2deg)}}
+.prize-content{flex:1}
+.prize-title{font-family:var(--ff-display);font-size:clamp(1.5rem,3vw,2.4rem);font-weight:700;color:#fff;line-height:1.1;margin-bottom:10px}
+.prize-desc{font-size:.97rem;color:rgba(255,255,255,.78);line-height:1.65;max-width:640px}
+.prize-source{font-size:.8rem;color:rgba(255,255,255,.45);margin-top:10px;font-style:italic}
+.prize-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:var(--r);padding:14px 24px;flex-shrink:0;text-align:center;backdrop-filter:blur(10px)}
+.prize-badge-year{font-family:var(--ff-display);font-size:2.4rem;font-weight:700;color:#fff;line-height:1}
+.prize-badge-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-top:4px}
+
+/* ===== IMPACT NUMBERS ===== */
+.impact-section{background:var(--dark-3);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.impact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0}
+@media(min-width:600px){.impact-grid{grid-template-columns:repeat(4,1fr)}}
+.impact-item{padding:clamp(32px,5vw,56px) clamp(24px,4vw,40px);text-align:center;border-right:1px solid var(--border);position:relative}
+.impact-item:last-child{border-right:none}
+.impact-item:nth-child(2n){border-right:none}
+@media(min-width:600px){.impact-item:nth-child(2n){border-right:1px solid var(--border)}.impact-item:last-child{border-right:none}.impact-item:nth-child(4n){border-right:none}}
+.impact-item::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:40%;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);opacity:0;transition:opacity .4s}
+.impact-item:hover::after{opacity:1}
+.impact-icon{font-size:2rem;margin-bottom:12px;display:block}
+.impact-num{font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4rem);font-weight:700;color:var(--cream);line-height:1;display:block}
+.impact-suffix{color:var(--gold)}
+.impact-label{font-size:.78rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:8px;line-height:1.5;display:block}
+
+/* ===== ABOUT ===== */
+.about-section{background:var(--dark)}
+.about-grid{display:grid;grid-template-columns:1fr;gap:clamp(48px,7vw,90px);align-items:start}
+@media(min-width:900px){.about-grid{grid-template-columns:5fr 6fr}}
+.about-visual-stack{position:relative;padding-bottom:60px}
+.about-main-card{background:var(--dark-3);border:1px solid var(--border-accent);border-radius:16px;padding:clamp(28px,5vw,50px);position:relative;overflow:hidden}
+.about-main-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),var(--gold))}
+.about-main-card::after{content:'';position:absolute;bottom:-80px;right:-80px;width:240px;height:240px;background:radial-gradient(circle,rgba(192,24,48,.1) 0%,transparent 70%);pointer-events:none}
+.about-quote{font-family:var(--ff-serif);font-style:italic;font-size:clamp(1.05rem,2vw,1.3rem);color:rgba(238,233,226,.72);line-height:1.8;margin-bottom:32px;border-left:3px solid var(--red);padding-left:20px}
+.about-facts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.fact-item{background:var(--dark-4);border:1px solid var(--border);border-radius:var(--r);padding:18px;transition:border-color var(--transition)}
+.fact-item:hover{border-color:var(--border-accent)}
+.fact-num{font-family:var(--ff-display);font-size:2rem;font-weight:700;color:var(--gold);line-height:1}
+.fact-label{font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.4}
+.about-secondary-card{background:var(--dark-4);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:16px;display:flex;align-items:center;gap:16px}
+.about-secondary-icon{font-size:2rem;flex-shrink:0}
+.about-secondary-text{font-size:.88rem;color:rgba(238,233,226,.6);line-height:1.6}
+.about-secondary-text strong{color:var(--cream)}
+/* Timeline */
+.timeline-wrap{padding-left:0}
+.tl-section-title{font-family:var(--ff-display);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;gap:12px}
+.tl-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.timeline{position:relative;padding-left:30px}
+.timeline::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;background:linear-gradient(to bottom,var(--red),var(--gold))}
+.timeline-item{position:relative;margin-bottom:32px}
+.timeline-item:last-child{margin-bottom:0}
+.timeline-dot{position:absolute;left:-37px;top:5px;width:14px;height:14px;background:var(--dark);border:2px solid var(--gold);border-radius:50%;transition:background var(--transition)}
+.timeline-item:hover .timeline-dot{background:var(--gold)}
+.timeline-year{font-family:var(--ff-display);font-size:.76rem;font-weight:700;color:var(--red);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.timeline-h{font-family:var(--ff-display);font-size:1.05rem;font-weight:600;color:var(--cream);margin-bottom:6px}
+.timeline-text{font-size:.88rem;color:rgba(238,233,226,.58);line-height:1.7}
+.timeline-tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(212,175,55,.12);color:var(--gold);padding:3px 8px;border-radius:100px;margin-top:8px}
+
+/* ===== VALUES SECTION ===== */
+.values-section{background:var(--dark-2);position:relative;overflow:hidden}
+.values-section::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(192,24,48,.06) 0%,transparent 70%);pointer-events:none}
+.values-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:52px}
+.value-card{background:var(--dark-3);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px 28px;transition:all var(--transition);position:relative;overflow:hidden;cursor:default}
+.value-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(192,24,48,.05) 0%,transparent 60%);opacity:0;transition:opacity var(--transition)}
+.value-card:hover{border-color:rgba(192,24,48,.25);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.value-card:hover::before{opacity:1}
+.value-icon{font-size:2.6rem;margin-bottom:20px;display:block}
+.value-title{font-family:var(--ff-display);font-size:1.25rem;font-weight:600;color:var(--cream);margin-bottom:10px}
+.value-text{font-size:.9rem;color:rgba(238,233,226,.55);line-height:1.75}
+.value-number{position:absolute;top:20px;right:22px;font-family:var(--ff-display);font-size:3.5rem;font-weight:700;color:rgba(255,255,255,.04);line-height:1;user-select:none}
+
+/* ===== LEADERSHIP ===== */
+.leadership-section{background:var(--dark)}
+.leadership-intro{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:52px}
+.leadership-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.leader-card{background:var(--dark-3);border:1px solid var(--border);border-radius:var(--r-lg);padding:30px 26px;transition:all var(--transition);position:relative;overflow:hidden}
+.leader-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--red),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform var(--transition)}
+.leader-card:hover{border-color:rgba(212,175,55,.2);transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.leader-card:hover::before{transform:scaleX(1)}
+.leader-card.president{border-color:rgba(212,175,55,.25);background:linear-gradient(135deg,var(--dark-3) 0%,rgba(212,175,55,.04) 100%)}
+.leader-header{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.leader-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--red) 0%,var(--red-deep) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--ff-display);font-size:1.2rem;font-weight:700;color:#fff;flex-shrink:0}
+.leader-card.president .leader-avatar{background:linear-gradient(135deg,var(--gold) 0%,#B8902A 100%);color:var(--dark)}
+.leader-role{font-family:var(--ff-display);font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.leader-name{font-family:var(--ff-display);font-size:1.18rem;font-weight:600;color:var(--cream);line-height:1.2}
+.leader-org{font-size:.8rem;color:var(--muted);margin-top:6px;line-height:1.5}
+.leader-divider{height:1px;background:var(--border);margin:14px 0}
+.leader-bio{font-size:.84rem;color:rgba(238,233,226,.5);line-height:1.7}
+
+/* ===== ACTIVITIES ===== */
+.activities-section{background:var(--dark-2)}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:44px}
+.filter-btn{font-family:var(--ff-display);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--border);background:transparent;color:rgba(238,233,226,.45);border-radius:100px;transition:all var(--transition)}
+.filter-btn:hover,.filter-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+.activities-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:24px}
+.activity-card{background:var(--dark-3);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--transition);display:flex;flex-direction:column}
+.activity-card:hover{border-color:rgba(192,24,48,.3);transform:translateY(-7px);box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.activity-card.hidden{display:none}
+.activity-img{height:190px;background-size:cover;background-position:center;background-color:var(--dark-4);position:relative}
+.activity-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 50%)}
+.activity-cat{position:absolute;top:14px;left:14px;font-family:var(--ff-display);font-size:.63rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:var(--red);color:#fff;padding:5px 10px;border-radius:4px}
+.activity-status{position:absolute;top:14px;right:14px;font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:100px;background:rgba(8,12,16,.85);backdrop-filter:blur(8px)}
+.activity-status.activ{color:#4ade80}
+.activity-status.planificat{color:#60a5fa}
+.activity-status.finalizat{color:#a78bfa}
+.activity-body{padding:22px;flex:1;display:flex;flex-direction:column}
+.activity-title{font-family:var(--ff-display);font-size:1.12rem;font-weight:600;color:var(--cream);margin-bottom:10px;line-height:1.25}
+.activity-desc{font-size:.87rem;color:rgba(238,233,226,.52);line-height:1.75;flex:1;margin-bottom:18px}
+.progress-wrap{margin-bottom:14px}
+.progress-header{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-bottom:7px}
+.progress-track{height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(to right,var(--red),var(--gold));border-radius:2px;transition:width 1.4s ease}
+.activity-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border);font-size:.76rem;color:var(--muted)}
+
+/* ===== EVENTS ===== */
+.events-section{background:var(--dark)}
+.events-layout{display:grid;grid-template-columns:1fr;gap:32px}
+@media(min-width:960px){.events-layout{grid-template-columns:1fr 360px}}
+.event-item{display:flex;gap:18px;padding:22px;border-radius:10px;background:var(--dark-3);border:1px solid var(--border);cursor:pointer;transition:all var(--transition);margin-bottom:14px;position:relative;overflow:hidden}
+.event-item::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--red);transform:scaleY(0);transform-origin:center;transition:transform var(--transition);border-radius:0 2px 2px 0}
+.event-item:hover{border-color:rgba(192,24,48,.3);background:var(--dark-4)}
+.event-item:hover::after{transform:scaleY(1)}
+.event-date-box{flex-shrink:0;width:56px;height:64px;background:var(--red);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.event-day{font-family:var(--ff-display);font-size:1.6rem;font-weight:700;color:#fff;line-height:1}
+.event-month{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.event-info{flex:1;min-width:0}
+.event-title{font-family:var(--ff-display);font-size:1.02rem;font-weight:600;color:var(--cream);margin-bottom:8px;line-height:1.3}
+.event-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:.78rem;color:var(--muted)}
+.event-meta span{display:flex;align-items:center;gap:5px}
+.event-desc{font-size:.84rem;color:rgba(238,233,226,.45);line-height:1.6;margin-top:10px;display:none}
+.event-item.expanded .event-desc{display:block}
+.event-rsvp{flex-shrink:0;align-self:center}
+.event-cat-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:1px}
+/* Mini Calendar */
+.mini-cal{background:var(--dark-3);border:1px solid var(--border-accent);border-radius:var(--r-lg);padding:22px;position:sticky;top:86px}
+.mini-cal-title{font-family:var(--ff-display);font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.cal-nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-month{font-family:var(--ff-display);font-size:.95rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cream)}
+.cal-btn{background:var(--dark-4);border:1px solid var(--border);color:var(--cream);width:30px;height:30px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all var(--transition)}
+.cal-btn:hover{background:var(--red);border-color:var(--red)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-header{font-family:var(--ff-display);font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;padding:6px 2px}
+.cal-day{font-size:.8rem;text-align:center;padding:6px 2px;border-radius:4px;cursor:pointer;transition:all var(--transition);color:rgba(238,233,226,.5)}
+.cal-day:hover{background:var(--dark-5);color:var(--cream)}
+.cal-day.today{background:var(--red);color:#fff;font-weight:700}
+.cal-day.has-event{color:var(--gold);font-weight:600;position:relative}
+.cal-day.has-event::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;background:var(--gold);border-radius:50%}
+.cal-day.other-month{opacity:.25}
+/* Upcoming reminder */
+.upcoming-section{background:var(--dark-3);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;margin-top:16px}
+.upcoming-title{font-family:var(--ff-display);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.upcoming-item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)}
+.upcoming-item:last-child{border-bottom:none;padding-bottom:0}
+.upcoming-dot{width:8px;height:8px;background:var(--red);border-radius:50%;margin-top:5px;flex-shrink:0}
+.upcoming-info{flex:1}
+.upcoming-event-title{font-size:.85rem;color:var(--cream);font-weight:500;margin-bottom:2px}
+.upcoming-event-date{font-size:.74rem;color:var(--muted)}
+
+/* ===== NEWS ===== */
+.news-section{background:var(--dark-2)}
+.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
+.news-card{background:var(--dark-3);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--transition)}
+.news-card:hover{border-color:rgba(212,175,55,.2);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.news-img{height:200px;background-size:cover;background-position:center;background-color:var(--dark-4);position:relative;overflow:hidden}
+.news-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 55%)}
+.news-body{padding:22px}
+.news-cat{font-family:var(--ff-display);font-size:.67rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.news-title{font-family:var(--ff-display);font-size:1.12rem;font-weight:600;color:var(--cream);line-height:1.3;margin-bottom:12px}
+.news-title a{transition:color var(--transition)}
+.news-title a:hover{color:var(--gold)}
+.news-excerpt{font-size:.87rem;color:rgba(238,233,226,.5);line-height:1.75;margin-bottom:18px}
+.news-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border);font-size:.78rem;color:var(--muted)}
+.news-read-more{font-family:var(--ff-display);font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);transition:gap var(--transition);display:flex;align-items:center;gap:6px}
+.news-read-more:hover{gap:10px}
+.share-row{display:flex;gap:6px}
+.share-btn{font-family:var(--ff-display);font-size:.65rem;font-weight:700;letter-spacing:.08em;padding:5px 9px;background:var(--dark-4);border:1px solid var(--border);color:var(--muted);border-radius:4px;transition:all var(--transition)}
+.share-btn:hover{background:var(--dark-5);color:var(--cream);border-color:rgba(255,255,255,.15)}
+
+/* ===== JOIN ===== */
+.join-section{background:var(--dark-3);position:relative;overflow:hidden}
+.join-section::before{content:'';position:absolute;bottom:-300px;left:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(192,24,48,.08) 0%,transparent 65%);pointer-events:none}
+.join-intro{text-align:center;margin-bottom:56px}
+.join-intro .body-text{margin:18px auto 0;text-align:center;max-width:500px}
+.join-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
+.join-card{background:var(--dark-4);border:1px solid var(--border);border-radius:var(--r-lg);padding:36px 32px;transition:all var(--transition);display:flex;flex-direction:column;gap:14px;text-align:center}
+.join-card.featured{background:linear-gradient(135deg,var(--dark-3) 0%,rgba(192,24,48,.08) 100%);border-color:rgba(192,24,48,.3)}
+.join-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.join-icon{font-size:3.2rem;margin-bottom:6px}
+.join-title{font-family:var(--ff-display);font-size:1.4rem;font-weight:700;color:var(--cream)}
+.join-text{font-size:.9rem;color:rgba(238,233,226,.55);line-height:1.75;flex:1}
+.join-card .btn{align-self:center;margin-top:6px}
+
+/* ===== MEMBERSHIP FORM ===== */
+.membership-section{background:var(--dark);position:relative}
+.membership-grid{display:grid;grid-template-columns:1fr;gap:56px}
+@media(min-width:900px){.membership-grid{grid-template-columns:1fr 1fr}}
+.membership-info{position:sticky;top:90px;align-self:start}
+.membership-benefits{display:flex;flex-direction:column;gap:18px;margin-top:36px}
+.benefit-item{display:flex;gap:16px;align-items:flex-start}
+.benefit-icon{width:42px;height:42px;background:var(--dark-3);border:1px solid var(--border-accent);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.benefit-text h4{font-family:var(--ff-display);font-size:1rem;font-weight:600;color:var(--cream);margin-bottom:4px}
+.benefit-text p{font-size:.86rem;color:rgba(238,233,226,.5);line-height:1.6}
+.form-card{background:var(--dark-3);border:1px solid var(--border-accent);border-radius:16px;padding:clamp(28px,5vw,44px)}
+.form-card::before{content:'';display:block;height:3px;background:linear-gradient(to right,var(--red),var(--gold));margin:-clamp(28px,5vw,44px) -clamp(28px,5vw,44px) clamp(28px,5vw,44px);border-radius:16px 16px 0 0}
+.form-title{font-family:var(--ff-display);font-size:1.5rem;font-weight:700;color:var(--cream);margin-bottom:6px}
+.form-subtitle{font-size:.88rem;color:var(--muted);margin-bottom:28px}
+.form-field{margin-bottom:20px}
+.form-label{display:block;font-family:var(--ff-display);font-size:.74rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(238,233,226,.55);margin-bottom:8px}
+.form-input{width:100%;background:var(--dark-4);border:1px solid var(--border);color:var(--cream);padding:12px 16px;border-radius:var(--r);font-family:var(--ff-body);font-size:.95rem;transition:border-color var(--transition),box-shadow var(--transition);-webkit-appearance:none}
+.form-input::placeholder{color:var(--muted);opacity:.7}
+.form-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.12)}
+.form-input.error{border-color:var(--red)}
+.form-input.valid{border-color:#4ade80}
+.field-err{display:block;font-size:.78rem;color:var(--red);margin-top:6px;min-height:18px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
+.check-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:20px}
+.check-row input[type=checkbox]{accent-color:var(--red);width:18px;height:18px;flex-shrink:0;margin-top:2px;cursor:pointer}
+.check-label{font-size:.86rem;color:rgba(238,233,226,.55);line-height:1.5;cursor:pointer}
+.check-label a{color:var(--gold);text-decoration:underline}
+.form-msg{padding:14px 18px;border-radius:var(--r);font-size:.88rem;font-weight:500;line-height:1.5}
+.form-msg.success{background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);color:#4ade80}
+.form-msg.error{background:rgba(192,24,48,.1);border:1px solid rgba(192,24,48,.3);color:#ff6b6b}
+
+/* ===== NEWSLETTER ===== */
+.newsletter-section{background:linear-gradient(135deg,var(--dark-2) 0%,var(--dark-3) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:clamp(64px,9vw,110px) 0}
+.newsletter-inner{display:grid;grid-template-columns:1fr;gap:48px;align-items:center}
+@media(min-width:768px){.newsletter-inner{grid-template-columns:1fr 1fr}}
+.nl-title{font-family:var(--ff-display);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--cream);line-height:1;margin-bottom:14px}
+.nl-title span{color:var(--gold)}
+.nl-sub{font-size:1rem;color:rgba(238,233,226,.55);line-height:1.7;max-width:380px}
+.nl-promise{display:flex;align-items:center;gap:10px;margin-top:20px;font-size:.84rem;color:rgba(238,233,226,.4)}
+.nl-promise span{width:20px;height:20px;background:rgba(212,175,55,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0}
+.nl-form{width:100%}
+.nl-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.nl-input{flex:1;min-width:200px;background:var(--dark-4);border:1px solid var(--border);color:var(--cream);padding:14px 18px;border-radius:var(--r);font-family:var(--ff-body);font-size:.95rem;transition:border-color var(--transition)}
+.nl-input::placeholder{color:var(--muted);opacity:.7}
+.nl-input:focus{outline:none;border-color:var(--gold)}
+.nl-input.error{border-color:var(--red)}
+.nl-input.valid{border-color:#4ade80}
+.nl-note{font-size:.78rem;color:var(--muted);line-height:1.5}
+.nl-note a{color:var(--gold);text-decoration:underline}
+
+/* ===== CONTACT ===== */
+.contact-section{background:var(--dark-2)}
+.contact-grid{display:grid;grid-template-columns:1fr;gap:56px}
+@media(min-width:900px){.contact-grid{grid-template-columns:1fr 1fr}}
+.contact-info{position:sticky;top:90px;align-self:start}
+.contact-detail{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--border)}
+.contact-detail:last-of-type{border-bottom:none}
+.contact-detail-icon{width:44px;height:44px;background:var(--dark-3);border:1px solid var(--border-accent);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.contact-detail-body p:first-child{font-weight:600;color:var(--cream);margin-bottom:3px;font-size:.95rem}
+.contact-detail-body p:last-child,.contact-detail-body a{font-size:.9rem;color:var(--muted);transition:color var(--transition)}
+.contact-detail-body a:hover{color:var(--gold)}
+.social-row{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}
+.social-btn{width:40px;height:40px;background:var(--dark-4);border:1px solid var(--border);border-radius:var(--r);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all var(--transition)}
+.social-btn:hover{background:var(--red);border-color:var(--red);color:#fff;transform:translateY(-2px)}
+
+/* ===== FOOTER ===== */
+.site-footer{background:var(--dark);border-top:1px solid var(--border);padding:clamp(60px,8vw,100px) 0 40px}
+.footer-grid{display:grid;grid-template-columns:1fr;gap:48px}
+@media(min-width:640px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.footer-grid{grid-template-columns:2fr 1fr 1fr 1fr}}
+.footer-brand-tagline{font-size:.86rem;color:var(--muted);line-height:1.7;margin-top:16px;max-width:280px}
+.footer-col-title{font-family:var(--ff-display);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(238,233,226,.35);margin-bottom:18px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:.9rem;color:rgba(238,233,226,.45);transition:color var(--transition),padding-left var(--transition)}
+.footer-links a:hover{color:var(--cream);padding-left:4px}
+.footer-bottom{margin-top:60px;padding-top:28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-copyright{font-size:.82rem;color:var(--muted)}
+.footer-legal{display:flex;gap:20px;flex-wrap:wrap}
+.footer-legal a{font-size:.82rem;color:var(--muted);transition:color var(--transition)}
+.footer-legal a:hover{color:var(--cream)}
+
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:10001;display:flex;align-items:center;justify-content:center;padding:var(--gap);backdrop-filter:blur(8px)}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--dark-3);border:1px solid var(--border-accent);border-radius:16px;padding:clamp(28px,5vw,44px);max-width:560px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal::before{content:'';display:block;height:3px;background:linear-gradient(to right,var(--red),var(--gold));margin:-clamp(28px,5vw,44px) -clamp(28px,5vw,44px) clamp(28px,5vw,44px);border-radius:16px 16px 0 0}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--dark-4);border:1px solid var(--border);color:var(--muted);width:36px;height:36px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all var(--transition)}
+.modal-close:hover{background:var(--red);border-color:var(--red);color:#fff}
+
+/* ===== SCROLL REVEAL ===== */
+[data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1)}
+[data-reveal][data-reveal-delay="1"]{transition-delay:.12s}
+[data-reveal][data-reveal-delay="2"]{transition-delay:.24s}
+[data-reveal][data-reveal-delay="3"]{transition-delay:.36s}
+[data-reveal].visible{opacity:1;transform:translateY(0)}
+
+/* ===== SECTION DIVIDER ===== */
+.divider{display:flex;align-items:center;gap:20px;margin:0 auto;max-width:var(--container);padding:0 var(--gap)}
+.divider-line{flex:1;height:1px;background:var(--border)}
+.divider-icon{color:var(--gold);font-size:1rem;opacity:.5}
+
+/* ===== RESPONSIVE FIXES ===== */
+@media(max-width:640px){
+  .hero-stats{gap:20px}
+  .about-facts{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .prize-inner{flex-direction:column}
+  .prize-badge{align-self:flex-start}
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--dark-2)}
+::-webkit-scrollbar-thumb{background:var(--dark-5);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--red)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ COOKIE BANNER ═══════════════ -->
+<div id="cookie-banner" role="dialog" aria-label="Banner cookie" aria-live="polite">
+  <div class="cookie-text">
+    <p>🍪 Folosim cookie-uri esențiale</p>
+    <p>Site-ul utilizează cookie-uri pentru funcționare corectă. Citește <a href="#gdpr">Politica de confidențialitate</a>.</p>
+  </div>
+  <div class="cookie-btns">
+    <button id="accept-all" class="btn btn-primary btn-sm">Acceptă toate</button>
+    <button id="accept-ess" class="btn btn-outline btn-sm">Doar esențiale</button>
+  </div>
+</div>
+
+<!-- ═══════════════ ALERT BANNER ═══════════════ -->
+<div id="alert" role="banner" aria-label="Anunț important">
+  <span>📅</span>
+  <span><strong>Ședință TSD Satu Mare — 15 Februarie 2026, ora 17:00</strong> · Sediul PSD Satu Mare · <a href="#evenimente" style="color:#fff;text-decoration:underline;font-weight:600">Vezi detalii →</a></span>
+  <button id="alert-close" aria-label="Închide anunțul">×</button>
+</div>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <a href="#" class="logo" aria-label="TSD Satu Mare — pagina principală">
+      <span class="logo-badge">TSD</span>
+      <span class="logo-divider" aria-hidden="true"></span>
+      <span class="logo-name">Satu Mare</span>
+      <span class="logo-tagline" aria-hidden="true">Tineret Social Democrat</span>
+    </a>
+    <nav class="main-nav" aria-label="Navigare principală">
+      <a href="#despre" class="nav-link">Despre</a>
+      <a href="#valori" class="nav-link">Valori</a>
+      <a href="#conducere" class="nav-link">Conducere</a>
+      <a href="#activitati" class="nav-link">Activități</a>
+      <a href="#evenimente" class="nav-link">Evenimente</a>
+      <a href="#stiri" class="nav-link">Știri</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <div class="header-cta">
+      <a href="#formular-membru" class="btn btn-primary btn-sm" id="header-cta-btn" style="display:none">Înscrie-te</a>
+      <button class="hamburger" id="hamburger" aria-label="Meniu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ MOBILE MENU ═══════════════ -->
+<nav class="mobile-menu" id="mobile-menu" aria-label="Meniu mobil" aria-hidden="true">
+  <ul class="mobile-nav-list" role="list">
+    <li><a href="#despre" class="mobile-nav-link">Despre noi</a></li>
+    <li><a href="#valori" class="mobile-nav-link">Valorile noastre</a></li>
+    <li><a href="#conducere" class="mobile-nav-link">Conducere</a></li>
+    <li><a href="#activitati" class="mobile-nav-link">Activități</a></li>
+    <li><a href="#evenimente" class="mobile-nav-link">Evenimente</a></li>
+    <li><a href="#stiri" class="mobile-nav-link">Știri</a></li>
+    <li><a href="#alatura-te" class="mobile-nav-link">Alătură-te</a></li>
+    <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+  </ul>
+  <a href="#formular-membru" class="btn btn-primary btn-lg btn-full" style="margin-bottom:20px">Devino Membru TSD</a>
+  <div class="mobile-social" aria-label="Rețele sociale">
+    <a href="✏️EDIT_FB" class="social-btn" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <a href="✏️EDIT_IG" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="✏️EDIT_TT" class="social-btn" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+    </a>
+  </div>
+</nav>
+
+<main id="main-content">
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="hero-dot" aria-hidden="true"></span>
+      <span class="hero-eyebrow-text">Tineretul Social Democrat Satu Mare</span>
+    </div>
+    <h1 class="hero-title" id="hero-title">
+      Schimbăm<br/>
+      <span class="hero-title-italic">împreună.</span>
+    </h1>
+    <p class="hero-desc">Suntem tineri din Satu Mare care cred că implicarea civică face diferența. Caritabil, educație, antreprenoriat — acțiuni reale pentru comunitatea noastră.</p>
+    <div class="hero-actions">
+      <a href="#alatura-te" class="btn btn-primary btn-lg">Alătură-te mișcării</a>
+      <a href="#activitati" class="btn btn-outline btn-lg">Vezi activitățile</a>
+    </div>
+    <div class="hero-stats" role="list">
+      <div class="hero-stat" role="listitem">
+        <span class="hero-stat-num" data-count="250">0</span>
+        <span class="hero-stat-label">Membri activi</span>
+      </div>
+      <div class="hero-stat" role="listitem">
+        <span class="hero-stat-num" data-count="6">0</span>
+        <span class="hero-stat-label">Proiecte actuale</span>
+      </div>
+      <div class="hero-stat" role="listitem">
+        <span class="hero-stat-num" data-count="1">0</span>
+        <span class="hero-stat-label">Premiu național</span>
+      </div>
+    </div>
+    <div class="slider-dots" id="slider-dots" role="tablist" aria-label="Selectează slide-ul"></div>
+  </div>
+  <div class="hero-right" aria-hidden="true">
+    <div class="hero-img active" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80')"></div>
+    <div class="hero-img" style="background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80')"></div>
+    <div class="hero-img" style="background-image:url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1200&q=80')"></div>
+    <div class="hero-right-overlay"></div>
+    <div class="hero-badge" aria-label="Premiu Gala TSD 2023">
+      <div class="hero-badge-num">🏆</div>
+      <div class="hero-badge-text">Gala TSD 2023</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PRIZE BANNER ═══════════════ -->
+<section class="prize-banner" aria-label="Premiu Gala TSD România 2023">
+  <div class="container prize-inner">
+    <div class="prize-trophy" role="img" aria-label="Trofeu">🏆</div>
+    <div class="prize-content">
+      <p class="prize-title">Premiu Național — Cele Mai Multe Acțiuni Caritabile</p>
+      <p class="prize-desc">La Gala TSD România 2023 desfășurată la Craiova, organizația noastră a fost premiată pentru activitatea caritabilă extraordinară desfășurată de-a lungul anului — recunoașterea națională a efortului colectiv al tinerilor sătmăreni.</p>
+      <p class="prize-source">Sursă: Gala TSD România 2023, Craiova · Tineretul Social Democrat România</p>
+    </div>
+    <div class="prize-badge" aria-hidden="true">
+      <div class="prize-badge-year">2023</div>
+      <div class="prize-badge-label">Campioni naționali</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ IMPACT NUMBERS ═══════════════ -->
+<section class="impact-section" aria-label="Cifre de impact">
+  <div class="impact-grid">
+    <div class="impact-item" data-reveal>
+      <span class="impact-icon" aria-hidden="true">👥</span>
+      <span class="impact-num" data-count="250"><span class="impact-suffix">+</span></span>
+      <span class="impact-label">Tineri membri activi</span>
+    </div>
+    <div class="impact-item" data-reveal data-reveal-delay="1">
+      <span class="impact-icon" aria-hidden="true">❤️</span>
+      <span class="impact-num" data-count="20"><span class="impact-suffix">+</span></span>
+      <span class="impact-label">Acțiuni caritabile</span>
+    </div>
+    <div class="impact-item" data-reveal data-reveal-delay="2">
+      <span class="impact-icon" aria-hidden="true">🎓</span>
+      <span class="impact-num" data-count="67"><span class="impact-suffix"></span></span>
+      <span class="impact-label">Elevi în Liga Elevilor</span>
+    </div>
+    <div class="impact-item" data-reveal data-reveal-delay="3">
+      <span class="impact-icon" aria-hidden="true">🌳</span>
+      <span class="impact-num" data-count="5"><span class="impact-suffix">+</span></span>
+      <span class="impact-label">Ani de activitate</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DESPRE NOI ═══════════════ -->
+<section class="about-section section" id="despre" aria-labelledby="despre-h2">
+  <div class="container">
+    <div class="about-grid">
+      <!-- Stânga: date reale + facts -->
+      <div data-reveal>
+        <span class="tag">Cine suntem</span>
+        <h2 id="despre-h2" class="h2" style="margin-bottom:28px">O organizație<br/><span class="italic gold">cu suflet sătmărean.</span></h2>
+        <div class="about-main-card">
+          <p class="about-quote">"Tinerii din Satu Mare demonstrează zi de zi că implicarea civică nu este un ideal abstract — este o alegere concretă pe care o facem în fiecare acțiune."</p>
+          <p style="font-size:.9rem;color:rgba(238,233,226,.55);line-height:1.75;margin-bottom:24px">Tineretul Social Democrat Satu Mare este organizația de tineret a PSD Satu Mare, formată din tineri cu vârste între 18 și 35 de ani care împărtășesc valorile social-democrației și dorința de a contribui activ la binele comunității din județul Satu Mare.</p>
+          <p style="font-size:.9rem;color:rgba(238,233,226,.55);line-height:1.75">De la acțiuni caritabile și voluntariat, la educație civică și susținerea antreprenoriatului tânăr — TSD Satu Mare acționează pe toate fronturile pentru o comunitate mai bună.</p>
+          <div class="about-facts">
+            <div class="fact-item">
+              <div class="fact-num">2023</div>
+              <div class="fact-label">Premiu național la Gala TSD România</div>
+            </div>
+            <div class="fact-item">
+              <div class="fact-num">250<span style="color:var(--gold)">+</span></div>
+              <div class="fact-label">Membrii votanți la conferința județeană</div>
+            </div>
+            <div class="fact-item">
+              <div class="fact-num">17</div>
+              <div class="fact-label">Vicepreședinți aleși în octombrie 2023</div>
+            </div>
+            <div class="fact-item">
+              <div class="fact-num">67</div>
+              <div class="fact-label">Elevi înscriși la Liga Elevilor TSD</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-secondary-card" style="margin-top:16px">
+          <span class="about-secondary-icon">🤝</span>
+          <p class="about-secondary-text"><strong>Parte din TSD România</strong> — suntem filiala județeană a Tineretului Social Democrat, coordonată la nivel național din București, cu filiale în toate județele țării.</p>
+        </div>
+      </div>
+
+      <!-- Dreapta: Timeline -->
+      <div data-reveal data-reveal-delay="1">
+        <div class="tl-section-title">Istoria noastră</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2019</div>
+            <div class="timeline-h">Constituirea organizației județene</div>
+            <p class="timeline-text">TSD Satu Mare se reorganizează ca structură independentă, cu focus pe acțiuni caritabile și implicare civică în rândul tinerilor din județ.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2021</div>
+            <div class="timeline-h">Primele campanii de voluntariat</div>
+            <p class="timeline-text">Lansăm parteneriatele cu adăpostul de animale Freelife și derulăm primele campanii de donare de sânge, care devin tradiționale pentru organizație.</p>
+            <span class="timeline-tag">Caritabil</span>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">Oct 2023</div>
+            <div class="timeline-h">Conferință județeană — Castelul Karolyi</div>
+            <p class="timeline-text">La Castelul Karolyi din Carei, cu peste 250 de participanți, este aleasă o conducere nouă în frunte cu Bianca Șorian ca Președintă. Se constituie un Birou Permanent cu 8 membri și 17 vicepreședinți.</p>
+            <span class="timeline-tag">Organizație</span>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">Dec 2023</div>
+            <div class="timeline-h">🏆 Premiu național la Gala TSD România</div>
+            <p class="timeline-text">La Craiova, TSD Satu Mare primește premiul pentru „Organizația cu Cele Mai Multe Acțiuni Caritabile" la Gala TSD România 2023. Recunoaștere istorică pentru activitatea depusă.</p>
+            <span class="timeline-tag" style="background:rgba(192,24,48,.15);color:var(--red)">Premiu Național</span>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2024</div>
+            <div class="timeline-h">Liga Elevilor Social-Democrați</div>
+            <p class="timeline-text">Lansăm structura dedicată elevilor din județ. La constituire, 67 de elevi din mai multe licee sătmărene devin parte din mișcare.</p>
+            <span class="timeline-tag">Educație</span>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">Apr 2025</div>
+            <div class="timeline-h">Workshop Start-Up Nation 2025</div>
+            <p class="timeline-text">Alături de PSD Satu Mare, organizăm în aceeași zi două evenimente — în Satu Mare și Tășnad — despre Programul Național Start-Up Nation 2025, cu finanțări de până la 250.000 lei.</p>
+            <span class="timeline-tag" style="background:rgba(96,165,250,.12);color:#60a5fa">Antreprenoriat</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ VALORILE NOASTRE ═══════════════ -->
+<section class="values-section section" id="valori" aria-labelledby="valori-h2">
+  <div class="container">
+    <div data-reveal style="text-align:center;max-width:560px;margin:0 auto 0">
+      <span class="tag">Ce ne definește</span>
+      <h2 id="valori-h2" class="h2">Valorile noastre<br/><span class="italic gold">fundamentale.</span></h2>
+      <p class="body-text" style="margin:16px auto 0;text-align:center">Aceste principii ghidează fiecare decizie, fiecare proiect și fiecare interacțiune din organizația noastră.</p>
+    </div>
+    <div class="values-grid">
+      <div class="value-card" data-reveal>
+        <span class="value-number">01</span>
+        <span class="value-icon" aria-hidden="true">🤝</span>
+        <h3 class="value-title">Solidaritate</h3>
+        <p class="value-text">Credem în puterea comunității. Nimeni nu rămâne în urmă — luptăm pentru drepturi egale și sprijin pentru cei care au nevoie, indiferent de origine sau statut social.</p>
+      </div>
+      <div class="value-card" data-reveal data-reveal-delay="1">
+        <span class="value-number">02</span>
+        <span class="value-icon" aria-hidden="true">⚖️</span>
+        <h3 class="value-title">Dreptate Socială</h3>
+        <p class="value-text">Fiecare tânăr merită șanse egale. Promovăm politici sociale progresiste care reduc inegalitățile și asigură accesul echitabil la educație, sănătate și oportunități.</p>
+      </div>
+      <div class="value-card" data-reveal data-reveal-delay="2">
+        <span class="value-number">03</span>
+        <span class="value-icon" aria-hidden="true">💡</span>
+        <h3 class="value-title">Inovație Civică</h3>
+        <p class="value-text">Soluțiile moderne rezolvă probleme vechi. Folosim tehnologia și creativitatea pentru a aduce schimbări reale — de la digitalizarea administrației la proiecte smart city.</p>
+      </div>
+      <div class="value-card" data-reveal>
+        <span class="value-number">04</span>
+        <span class="value-icon" aria-hidden="true">🌿</span>
+        <h3 class="value-title">Sustenabilitate</h3>
+        <p class="value-text">Acționăm cu responsabilitate față de mediu. Proiectele noastre integrează principii ecologice, de la curățarea parcurilor până la campanii de conștientizare.</p>
+      </div>
+      <div class="value-card" data-reveal data-reveal-delay="1">
+        <span class="value-number">05</span>
+        <span class="value-icon" aria-hidden="true">🎓</span>
+        <h3 class="value-title">Educație Continuă</h3>
+        <p class="value-text">Investim în cunoaștere. Organizăm workshop-uri, dezbateri și programe de mentorat care pregătesc tinerii pentru viața profesională și participarea democratică.</p>
+      </div>
+      <div class="value-card" data-reveal data-reveal-delay="2">
+        <span class="value-number">06</span>
+        <span class="value-icon" aria-hidden="true">🏠</span>
+        <h3 class="value-title">Identitate Locală</h3>
+        <p class="value-text">Suntem mândri de rădăcinile noastre sătmărene. Promovăm cultura, tradițiile și potențialul județului Satu Mare, conectând tinerii cu comunitatea lor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CONDUCERE ═══════════════ -->
+<section class="leadership-section section" id="conducere" aria-labelledby="conducere-h2">
+  <div class="container">
+    <div class="leadership-intro" data-reveal>
+      <div>
+        <span class="tag">Echipa de conducere</span>
+        <h2 id="conducere-h2" class="h2">Liderii<br/><span class="italic gold">organizației.</span></h2>
+      </div>
+      <p class="body-text" style="max-width:420px">Conducerea TSD Satu Mare a fost aleasă democratic la Conferința Județeană din octombrie 2023, în prezența a peste 250 de delegați.</p>
+    </div>
+    <div class="leadership-grid" id="leadership-grid" role="list"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ ACTIVITĂȚI ═══════════════ -->
+<section class="activities-section section" id="activitati" aria-labelledby="activitati-h2">
+  <div class="container">
+    <div data-reveal style="margin-bottom:52px">
+      <span class="tag">Ce facem concret</span>
+      <h2 id="activitati-h2" class="h2">Proiectele<br/><span class="italic gold">noastre.</span></h2>
+      <p class="body-text" style="margin-top:14px">Activitățile noastre sunt verificate și documentate — nu promisiuni, ci fapte reale.</p>
+    </div>
+    <div class="filter-bar" role="toolbar" aria-label="Filtrează activitățile">
+      <button class="filter-btn active" data-filter="all" aria-pressed="true">Toate</button>
+      <button class="filter-btn" data-filter="caritabil" aria-pressed="false">Caritabil</button>
+      <button class="filter-btn" data-filter="voluntariat" aria-pressed="false">Voluntariat</button>
+      <button class="filter-btn" data-filter="educational" aria-pressed="false">Educațional</button>
+      <button class="filter-btn" data-filter="antreprenoriat" aria-pressed="false">Antreprenoriat</button>
+    </div>
+    <div class="activities-grid" id="activities-grid" role="list"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ EVENIMENTE ═══════════════ -->
+<section class="events-section section" id="evenimente" aria-labelledby="eventi-h2">
+  <div class="container">
+    <div data-reveal style="margin-bottom:52px">
+      <span class="tag">Calendar</span>
+      <h2 id="eventi-h2" class="h2">Evenimente viitoare</h2>
+      <p class="body-text" style="margin-top:14px">Fii prezent. Fiecare întâlnire e o oportunitate să faci diferența.</p>
+    </div>
+    <div class="events-layout">
+      <div id="events-list" role="list"></div>
+      <div>
+        <div class="mini-cal">
+          <p class="mini-cal-title">Calendar lunar</p>
+          <div class="cal-nav-row">
+            <button class="cal-btn" id="cal-prev" aria-label="Luna anterioară">‹</button>
+            <span class="cal-month" id="cal-label"></span>
+            <button class="cal-btn" id="cal-next" aria-label="Luna următoare">›</button>
+          </div>
+          <div class="cal-grid" id="cal-grid" role="grid"></div>
+        </div>
+        <div class="upcoming-section">
+          <div class="upcoming-title">Urmează în curând</div>
+          <div id="upcoming-list"></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:44px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap" data-reveal>
+      <a href="#" class="btn btn-primary">Toate evenimentele</a>
+      <a href="#" class="btn btn-outline">📅 Adaugă în Google Calendar</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ȘTIRI ═══════════════ -->
+<section class="news-section section" id="stiri" aria-labelledby="stiri-h2">
+  <div class="container">
+    <div data-reveal style="margin-bottom:52px">
+      <span class="tag">Noutăți</span>
+      <h2 id="stiri-h2" class="h2">Știri &<br/><span class="italic gold">comunicate.</span></h2>
+      <p class="body-text" style="margin-top:14px">Rămâi la curent cu activitățile și realizările TSD Satu Mare.</p>
+    </div>
+    <div class="news-grid" id="news-grid" role="list"></div>
+    <div style="text-align:center;margin-top:44px" data-reveal>
+      <a href="#" class="btn btn-primary">Toate știrile</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ALĂTURĂ-TE ═══════════════ -->
+<section class="join-section section" id="alatura-te" aria-labelledby="join-h2">
+  <div class="container">
+    <div class="join-intro" data-reveal>
+      <span class="tag">Hai cu noi</span>
+      <h2 id="join-h2" class="h2">Cum te implici?</h2>
+      <p class="body-text">Oricine are un loc la noi. Alege calea ta spre schimbare.</p>
+    </div>
+    <div class="join-cards">
+      <div class="join-card" data-reveal>
+        <div class="join-icon">🎓</div>
+        <h3 class="join-title">Devino Membru</h3>
+        <p class="join-text">Fii parte din organizație, participă la decizii și construiește alături de noi. Formular de aderare simplu — completezi online în 5 minute, fără birocrație inutilă.</p>
+        <a href="#formular-membru" class="btn btn-primary">Înscrie-te acum</a>
+      </div>
+      <div class="join-card featured" data-reveal data-reveal-delay="1">
+        <div class="join-icon">⚡</div>
+        <h3 class="join-title">Voluntar pe Proiect</h3>
+        <p class="join-text">Nu vrei să te înscrii formal? Perfect. Ajută la o acțiune specifică, în ritmul tău. Fără angajamente pe termen lung — vii când poți, contribui cât poți.</p>
+        <a href="#formular-voluntar" class="btn btn-gold">Vreau să ajut</a>
+      </div>
+      <div class="join-card" data-reveal data-reveal-delay="2">
+        <div class="join-icon">💡</div>
+        <h3 class="join-title">Trimite o Idee</h3>
+        <p class="join-text">Ai o idee pentru comunitate? Spune-ne. Cele mai bune propuneri devin proiecte reale. Analizăm fiecare sugestie și răspundem în maxim 48 de ore.</p>
+        <a href="#contact" class="btn btn-outline">Trimite ideea ta</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FORMULAR ADERARE ═══════════════ -->
+<section class="membership-section section" id="formular-membru" aria-labelledby="member-h2">
+  <div class="container">
+    <div class="membership-grid">
+      <div class="membership-info" data-reveal>
+        <span class="tag">Devino parte din echipă</span>
+        <h2 id="member-h2" class="h2" style="margin-bottom:28px">Înscrie-te<br/><span class="italic gold">ca Membru TSD.</span></h2>
+        <p class="body-text" style="margin-bottom:40px">Devenind membru TSD Satu Mare, vei face parte dintr-o comunitate vibrantă de tineri activi. Procesul e simplu și gratuit.</p>
+        <div class="membership-benefits">
+          <div class="benefit-item">
+            <div class="benefit-icon">🗳️</div>
+            <div class="benefit-text">
+              <h4>Drept de vot</h4>
+              <p>Participi la toate deciziile organizației și votezi în conferințele județene și municipale.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">📚</div>
+            <div class="benefit-text">
+              <h4>Acces la traininguri</h4>
+              <p>Participi gratuit la workshopuri, seminarii și cursuri organizate la nivel județean și național.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">🌐</div>
+            <div class="benefit-text">
+              <h4>Rețea națională</h4>
+              <p>Devii parte din rețeaua TSD cu filiale în toate județele României și conexiuni la nivel european.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">🚀</div>
+            <div class="benefit-text">
+              <h4>Oportunități reale</h4>
+              <p>Poți candida pentru funcții în organizație sau intra în viața politică locală și națională.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal data-reveal-delay="1">
+        <div class="form-card" id="formular-aderare">
+          <h3 class="form-title">Formular de aderare</h3>
+          <p class="form-subtitle">Completează datele de mai jos. Vei fi contactat în 48 de ore.</p>
+          <form id="member-form" novalidate aria-label="Formular de aderare TSD">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label" for="m-fname">Prenume <span style="color:var(--red)">*</span></label>
+                <input type="text" id="m-fname" class="form-input" placeholder="Ion" required autocomplete="given-name"/>
+                <span class="field-err" id="m-fname-err"></span>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="m-lname">Nume <span style="color:var(--red)">*</span></label>
+                <input type="text" id="m-lname" class="form-input" placeholder="Ionescu" required autocomplete="family-name"/>
+                <span class="field-err" id="m-lname-err"></span>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="m-email">Email <span style="color:var(--red)">*</span></label>
+              <input type="email" id="m-email" class="form-input" placeholder="ion.ionescu@email.ro" required autocomplete="email"/>
+              <span class="field-err" id="m-email-err"></span>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="m-phone">Telefon <span style="color:var(--red)">*</span></label>
+              <input type="tel" id="m-phone" class="form-input" placeholder="07XX XXX XXX" required autocomplete="tel"/>
+              <span class="field-err" id="m-phone-err"></span>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label" for="m-city">Localitate <span style="color:var(--red)">*</span></label>
+                <input type="text" id="m-city" class="form-input" placeholder="Satu Mare" required/>
+                <span class="field-err" id="m-city-err"></span>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="m-age">Vârsta</label>
+                <input type="number" id="m-age" class="form-input" placeholder="22" min="16" max="35"/>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="m-domain">Domeniu de activitate / Studii</label>
+              <select id="m-domain" class="form-input">
+                <option value="">Alege...</option>
+                <option>Elev / Student</option>
+                <option>Angajat în mediul privat</option>
+                <option>Antreprenor</option>
+                <option>Funcționar public</option>
+                <option>Liber profesionist</option>
+                <option>Alt domeniu</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="m-motivation">De ce vrei să te alături? (opțional)</label>
+              <textarea id="m-motivation" class="form-input" rows="3" placeholder="Spune-ne câteva cuvinte despre motivația ta..." style="resize:vertical"></textarea>
+            </div>
+            <div class="check-row">
+              <input type="checkbox" id="m-gdpr" required/>
+              <label class="check-label" for="m-gdpr">Am citit și accept <a href="#gdpr">Politica de prelucrare a datelor personale</a>. Înțeleg că datele mele vor fi folosite exclusiv în scopul procesării cererii de aderare. <span style="color:var(--red)">*</span></label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full" id="m-submit">
+              <span id="m-btn-txt">Trimite cererea de aderare</span>
+              <span id="m-btn-load" hidden>Se procesează…</span>
+            </button>
+            <div id="m-response" class="form-msg" hidden style="margin-top:16px"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FORMULAR VOLUNTAR ═══════════════ -->
+<section class="section" id="formular-voluntar" style="background:var(--dark-3)" aria-labelledby="voluntar-h2">
+  <div class="container">
+    <div style="max-width:680px;margin:0 auto" data-reveal>
+      <span class="tag">Vrei să ajuți</span>
+      <h2 id="voluntar-h2" class="h2" style="margin-bottom:20px">Înregistrare<br/><span class="italic gold">voluntari.</span></h2>
+      <p class="body-text" style="margin-bottom:40px">Nu este nevoie să devii membru. Înregistrează-te ca voluntar și te contactăm înainte de următoarea acțiune.</p>
+      <div class="form-card">
+        <h3 class="form-title">Vreau să fiu voluntar</h3>
+        <p class="form-subtitle">Proces simplu — te anunțăm când avem nevoie de tine.</p>
+        <form id="volunteer-form" novalidate aria-label="Formular voluntar TSD">
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label" for="v-name">Numele tău <span style="color:var(--red)">*</span></label>
+              <input type="text" id="v-name" class="form-input" placeholder="Ion Ionescu" required autocomplete="name"/>
+              <span class="field-err" id="v-name-err"></span>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="v-email">Email <span style="color:var(--red)">*</span></label>
+              <input type="email" id="v-email" class="form-input" placeholder="email@tau.ro" required autocomplete="email"/>
+              <span class="field-err" id="v-email-err"></span>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="v-areas">Ce tipuri de acțiuni te interesează?</label>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">
+              <label style="display:flex;gap:8px;align-items:center;font-size:.88rem;color:rgba(238,233,226,.6);cursor:pointer"><input type="checkbox" value="caritabil" style="accent-color:var(--red)"/> Acțiuni caritabile</label>
+              <label style="display:flex;gap:8px;align-items:center;font-size:.88rem;color:rgba(238,233,226,.6);cursor:pointer"><input type="checkbox" value="ecologie" style="accent-color:var(--red)"/> Ecologie & mediu</label>
+              <label style="display:flex;gap:8px;align-items:center;font-size:.88rem;color:rgba(238,233,226,.6);cursor:pointer"><input type="checkbox" value="animale" style="accent-color:var(--red)"/> Protecția animalelor</label>
+              <label style="display:flex;gap:8px;align-items:center;font-size:.88rem;color:rgba(238,233,226,.6);cursor:pointer"><input type="checkbox" value="educatie" style="accent-color:var(--red)"/> Educație civică</label>
+              <label style="display:flex;gap:8px;align-items:center;font-size:.88rem;color:rgba(238,233,226,.6);cursor:pointer"><input type="checkbox" value="sanatate" style="accent-color:var(--red)"/> Sănătate (donare sânge)</label>
+            </div>
+          </div>
+          <div class="check-row" style="margin-top:16px">
+            <input type="checkbox" id="v-gdpr" required/>
+            <label class="check-label" for="v-gdpr">Accept <a href="#gdpr">Politica de confidențialitate</a> <span style="color:var(--red)">*</span></label>
+          </div>
+          <button type="submit" class="btn btn-gold btn-full" id="v-submit">
+            <span id="v-btn-txt">Mă înregistrez ca voluntar</span>
+            <span id="v-btn-load" hidden>Se procesează…</span>
+          </button>
+          <div id="v-response" class="form-msg" hidden style="margin-top:16px"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ NEWSLETTER ═══════════════ -->
+<section class="newsletter-section" aria-labelledby="nl-h2">
+  <div class="container newsletter-inner">
+    <div data-reveal>
+      <h2 id="nl-h2" class="nl-title">Rămâi la curent.<br/><span>Tot timpul.</span></h2>
+      <p class="nl-sub">Trimitem maxim 2 emailuri pe lună. Activități, evenimente, știri importante — nimic spam. Promisiune TSD.</p>
+      <div class="nl-promise">
+        <span>✓</span>
+        <span>Dezabonare oricând, cu un singur click</span>
+      </div>
+    </div>
+    <div data-reveal data-reveal-delay="1">
+      <form class="nl-form" id="nl-form" novalidate aria-label="Abonare newsletter TSD">
+        <div class="nl-row">
+          <input type="email" id="nl-email" class="nl-input" placeholder="emailul@tau.ro" required aria-label="Adresa de email" autocomplete="email"/>
+          <button type="submit" class="btn btn-primary">Abonează-mă</button>
+        </div>
+        <p class="nl-note">Prin abonare accepți <a href="#gdpr">Politica de confidențialitate</a>. Dezabonare oricând.</p>
+        <div id="nl-msg" class="form-msg" hidden style="margin-top:12px"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section class="contact-section section" id="contact" aria-labelledby="contact-h2">
+  <div class="container contact-grid">
+    <div class="contact-info" data-reveal>
+      <span class="tag">Contactează-ne</span>
+      <h2 id="contact-h2" class="h2" style="margin-bottom:32px">Suntem aproape.<br/><span class="italic gold">În fiecare sens.</span></h2>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-body">
+          <p>Sediu TSD Satu Mare</p>
+          <p>✏️EDIT_ADRESA, Satu Mare, România</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">✉️</div>
+        <div class="contact-detail-body">
+          <p>Email</p>
+          <a href="mailto:✏️EDIT_EMAIL">✏️EDIT_EMAIL</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📞</div>
+        <div class="contact-detail-body">
+          <p>Telefon / WhatsApp</p>
+          <a href="tel:✏️EDIT_TELEFON">✏️EDIT_TELEFON</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">🕐</div>
+        <div class="contact-detail-body">
+          <p>Program</p>
+          <p>Luni–Vineri, 10:00–18:00</p>
+        </div>
+      </div>
+      <div style="margin-top:28px">
+        <p style="font-family:var(--ff-display);font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(238,233,226,.3);margin-bottom:14px">Urmărește-ne pe social media</p>
+        <div class="social-row" aria-label="Rețele sociale">
+          <a href="✏️EDIT_FB" class="social-btn" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="✏️EDIT_IG" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="✏️EDIT_TT" class="social-btn" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div data-reveal data-reveal-delay="1">
+      <div class="form-card">
+        <h3 class="form-title">Trimite-ne un mesaj</h3>
+        <p class="form-subtitle">Răspundem în maxim 24 de ore în zilele lucrătoare.</p>
+        <form id="contact-form" novalidate aria-label="Formular de contact TSD Satu Mare">
+          <div class="form-field">
+            <label class="form-label" for="c-name">Numele tău <span style="color:var(--red)">*</span></label>
+            <input type="text" id="c-name" class="form-input" placeholder="Ion Ionescu" required autocomplete="name"/>
+            <span class="field-err" id="c-name-err"></span>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="c-email">Email <span style="color:var(--red)">*</span></label>
+            <input type="email" id="c-email" class="form-input" placeholder="ion@email.ro" required autocomplete="email"/>
+            <span class="field-err" id="c-email-err"></span>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="c-subject">Subiect</label>
+            <select id="c-subject" class="form-input">
+              <option value="">Alege subiectul...</option>
+              <option>Vreau să devin voluntar</option>
+              <option>Vreau să devin membru</option>
+              <option>Am o idee de proiect</option>
+              <option>Informații generale</option>
+              <option>Presă & parteneriat</option>
+              <option>Altele</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="c-msg">Mesajul tău <span style="color:var(--red)">*</span></label>
+            <textarea id="c-msg" class="form-input" rows="5" placeholder="Scrie-ne aici..." required style="resize:vertical"></textarea>
+            <span class="field-err" id="c-msg-err"></span>
+          </div>
+          <div class="check-row">
+            <input type="checkbox" id="c-gdpr" required/>
+            <label class="check-label" for="c-gdpr">Accept <a href="#gdpr">politica de prelucrare a datelor personale</a> <span style="color:var(--red)">*</span></label>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" id="c-submit">
+            <span id="c-btn-text">Trimite mesajul</span>
+            <span id="c-btn-load" hidden>Se trimite…</span>
+          </button>
+          <div id="c-msg-resp" class="form-msg" hidden style="margin-top:14px"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="site-footer" role="contentinfo" id="gdpr">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="logo" aria-label="TSD Satu Mare — pagina principală">
+          <span class="logo-badge">TSD</span>
+          <span class="logo-name">Satu Mare</span>
+        </a>
+        <p class="footer-brand-tagline">Tineretul Social Democrat Satu Mare — premianți la Gala TSD România 2023 pentru cele mai multe acțiuni caritabile la nivel național.</p>
+        <div class="social-row" style="margin-top:20px" aria-label="Rețele sociale">
+          <a href="✏️EDIT_FB" class="social-btn" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="✏️EDIT_IG" class="social-btn" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="✏️EDIT_TT" class="social-btn" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-title">Navigare</p>
+        <nav class="footer-links" aria-label="Linkuri rapide">
+          <a href="#despre">Despre noi</a>
+          <a href="#valori">Valorile noastre</a>
+          <a href="#conducere">Conducere</a>
+          <a href="#activitati">Activități</a>
+          <a href="#evenimente">Evenimente</a>
+          <a href="#stiri">Știri</a>
+        </nav>
+      </div>
+      <div>
+        <p class="footer-col-title">Implică-te</p>
+        <nav class="footer-links" aria-label="Linkuri implicare">
+          <a href="#formular-membru">Devin Membru</a>
+          <a href="#formular-voluntar">Devin Voluntar</a>
+          <a href="#contact">Trimite o idee</a>
+          <a href="#newsletter">Abonare newsletter</a>
+        </nav>
+      </div>
+      <div>
+        <p class="footer-col-title">Legal & GDPR</p>
+        <nav class="footer-links" aria-label="Linkuri legale">
+          <a href="#gdpr">Politică confidențialitate</a>
+          <a href="#gdpr">Prelucrare date personale</a>
+          <a href="#gdpr">Cookie Policy</a>
+        </nav>
+        <div style="margin-top:24px;padding:16px;background:var(--dark-3);border:1px solid var(--border);border-radius:var(--r)">
+          <p style="font-size:.78rem;color:var(--muted);line-height:1.7"><strong style="color:rgba(238,233,226,.45)">GDPR:</strong> Datele tale personale sunt prelucrate conform GDPR și legislației române. Ai dreptul la acces, rectificare, ștergere și portabilitate. Contact GDPR: <a href="mailto:✏️EDIT_EMAIL" style="color:var(--gold)">✏️EDIT_EMAIL</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">© 2025 TSD Satu Mare — Tineretul Social Democrat Satu Mare. Toate drepturile rezervate.</p>
+      <div class="footer-legal">
+        <a href="#gdpr">Confidențialitate</a>
+        <a href="#gdpr">Cookie-uri</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════ RSVP MODAL ═══════════════ -->
+<div class="modal-overlay hidden" id="rsvp-modal" role="dialog" aria-modal="true" aria-labelledby="rsvp-title">
+  <div class="modal">
+    <button class="modal-close" id="rsvp-close" aria-label="Închide fereastra">×</button>
+    <h3 class="form-title" id="rsvp-title">Confirmare participare</h3>
+    <p class="form-subtitle" id="rsvp-event-name">Eveniment TSD Satu Mare</p>
+    <form id="rsvp-form" novalidate aria-label="Confirmare participare la eveniment">
+      <div class="form-field">
+        <label class="form-label" for="r-name">Numele tău <span style="color:var(--red)">*</span></label>
+        <input type="text" id="r-name" class="form-input" placeholder="Ion Ionescu" required/>
+        <span class="field-err" id="r-name-err"></span>
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="r-email">Email <span style="color:var(--red)">*</span></label>
+        <input type="email" id="r-email" class="form-input" placeholder="ion@email.ro" required/>
+        <span class="field-err" id="r-email-err"></span>
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="r-persons">Număr persoane</label>
+        <select id="r-persons" class="form-input">
+          <option value="1">1 persoană</option>
+          <option value="2">2 persoane</option>
+          <option value="3">3 persoane</option>
+          <option value="4">4+ persoane</option>
+        </select>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="r-gdpr" required/>
+        <label class="check-label" for="r-gdpr">Accept <a href="#gdpr">politica de confidențialitate</a> <span style="color:var(--red)">*</span></label>
+      </div>
+      <span class="field-err" id="r-gdpr-err"></span>
+      <button type="submit" class="btn btn-primary btn-full" id="r-submit" style="margin-top:8px">
+        <span id="r-btn-txt">Confirm participarea</span>
+        <span id="r-btn-load" hidden>Se procesează…</span>
+      </button>
+      <div id="r-response" class="form-msg" hidden style="margin-top:14px"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+'use strict';
+// ══════════════════════════════════════════
+// DATE REALE
+// ══════════════════════════════════════════
+const LEADERSHIP = [
+  { role:'Președintă — TSD Județean', name:'Bianca Șorian', org:'Organizația Județeană TSD Satu Mare', initials:'BȘ', president:true, bio:'Aleasă cu peste 250 de voturi la Conferința Județeană din octombrie 2023, desfășurată la Castelul Karolyi din Carei.' },
+  { role:'Prim-Vicepreședinte — TSD Județean', name:'Adrian Andreka', org:'Organizația Județeană TSD Satu Mare', initials:'AA', president:false, bio:'Prim-vicepreședinte al organizației județene, coordonează activitățile și proiectele la nivel județean.' },
+  { role:'Prim-Vicepreședinte — TSD Județean', name:'Daniel Coza', org:'Organizația Județeană TSD Satu Mare', initials:'DC', president:false, bio:'Responsabil cu coordonarea proiectelor comunitare și parteneriatul cu organizațiile civice din județ.' },
+  { role:'Secretar Executiv — TSD Județean', name:'Claudiu Tămășan', org:'Organizația Județeană TSD Satu Mare', initials:'CT', president:false, bio:'Gestionează activitatea administrativă și comunicarea internă a organizației județene.' },
+  { role:'Președinte — TSD Municipal', name:'Sorin Stănean', org:'Organizația Municipală TSD Satu Mare', initials:'SS', president:false, bio:'Conduce organizația municipală din Satu Mare, cu focus pe activitățile din cadrul municipiului.' },
+  { role:'Prim-Vicepreședinte — TSD Municipal', name:'Andrei Krucz', org:'Organizația Municipală TSD Satu Mare', initials:'AK', president:false, bio:'Coordonează voluntarii și proiectele caritabile la nivel municipal.' },
+  { role:'Secretar Executiv — TSD Municipal', name:'Alexandra Petran', org:'Organizația Municipală TSD Satu Mare', initials:'AP', president:false, bio:'Responsabilă de comunicarea externă și relațiile cu mass-media ale organizației municipale.' },
+];
+
+const ACTIVITIES = [
+  { title:'Gala TSD România 2023 — Premiu Național', cat:'caritabil', status:'finalizat', desc:'TSD Satu Mare a primit premiul pentru „Organizația cu Cele Mai Multe Acțiuni Caritabile" la Gala TSD România desfășurată la Craiova. O recunoaștere istorică pentru organizație și toți tinerii implicați.', progress:100, vol:0, img:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=75' },
+  { title:'Voluntariat Adăpost Câini Freelife', cat:'voluntariat', status:'activ', desc:'Membrii TSD Satu Mare realizează acțiuni repetate de voluntariat la adăpostul de câini al asociației Freelife din Satu Mare — curățenie, socializare animale, strângere donații de hrană și rechizite.', progress:70, vol:12, img:'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&q=75' },
+  { title:'Igienizare Parcul Curtuiuș', cat:'voluntariat', status:'finalizat', desc:'Tinerii social-democrați sătmăreni, în colaborare cu Organizația Locală PSD nr. 17, au igienizat Parcul din Curtuiuș — acțiune civică de curățare și revitalizare a spațiului verde public.', progress:100, vol:0, img:'https://images.unsplash.com/photo-1618477388954-7852f32655ec?w=600&q=75' },
+  { title:'Start-Up Nation 2025 — Workshop Antreprenori', cat:'antreprenoriat', status:'finalizat', desc:'Alături de PSD Satu Mare, TSD a organizat în 11 Aprilie 2025 două evenimente simultane în Satu Mare și Tășnad despre Programul Național Start-Up Nation 2025 — finanțări de până la 250.000 lei pentru tinerii antreprenori.', progress:100, vol:0, img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=75' },
+  { title:'Campanie Donare Sânge — TSD Satu Mare', cat:'caritabil', status:'activ', desc:'Cu ocazia Zilei Internaționale a Donatorilor de Sânge și prin campanii recurente, Organizația Municipală TSD Satu Mare mobilizează tineri pentru donare. Fiecare donație salvează până la 3 vieți.', progress:60, vol:20, img:'https://images.unsplash.com/photo-1579154204601-01588f351e67?w=600&q=75' },
+  { title:'Liga Elevilor Social-Democrați Satu Mare', cat:'educational', status:'activ', desc:'Structura TSD dedicată elevilor din județul Satu Mare. La constituire, 67 de elevi din licee sătmărene. Sprijin pentru interesele elevilor, educație civică și implicare în viața comunității școlare.', progress:80, vol:30, img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=75' },
+];
+
+const EVENTS = [
+  { id:1, day:15, month:2, year:2026, title:'Ședință TSD Satu Mare — Planificare Activități 2026', time:'17:00', location:'Sediul PSD Satu Mare', cat:'sedinta', desc:'Ședință de lucru pentru planificarea activităților și proiectelor caritabile din 2026. Toți membrii TSD sunt invitați. Se vor discuta bugetele, calendarele și responsabilitățile pe proiecte.', spots:80 },
+  { id:2, day:5, month:3, year:2026, title:'Acțiune Voluntariat — Adăpost Animale Freelife', time:'09:00', location:'Adăpost Freelife, Satu Mare', cat:'voluntariat', desc:'Continuăm tradiția acțiunilor de voluntariat la adăpostul de animale Freelife. Adu mânuși și voie bună! Se acceptă donații de hrană uscată, pături și jucării pentru animale.', spots:40 },
+  { id:3, day:20, month:3, year:2026, title:'Campanie Donare Sânge — TSD Satu Mare', time:'08:00', location:'Centrul de Transfuzie Satu Mare', cat:'caritabil', desc:'Campanie anuală de donare de sânge organizată de TSD Satu Mare. Fiecare donator salvează vieți. Programul de donare este 08:00–13:00. Donatorii vor primi adeverință și zi liberă.', spots:100 },
+  { id:4, day:10, month:4, year:2026, title:'Dezbatere Publică — Tinerii și Piața Muncii', time:'18:00', location:'Casa de Cultură Satu Mare', cat:'educational', desc:'Dezbatere despre provocările tinerilor pe piața muncii din județul Satu Mare — oportunități locale, migrație, reconversie profesională și programe de suport existente.', spots:120 },
+];
+
+const NEWS = [
+  { title:'TSD Satu Mare — Premianți la Gala TSD România 2023', cat:'Caritabil', excerpt:'Echipa TSD Satu Mare a participat la Gala TSD România desfășurată la Craiova și a primit premiul pentru „Organizația cu Cele Mai Multe Acțiuni Caritabile Desfășurate" în 2023. O realizare care onorează munca tuturor membrilor organizației.', date:'11 Dec 2023', img:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=75', url:'#' },
+  { title:'Bianca Șorian — noua Președintă TSD Satu Mare, aleasă cu 250+ voturi', cat:'Organizație', excerpt:'Conferința județeană de alegeri de la Castelul Karolyi din Carei a adus o conducere nouă. Bianca Șorian a fost aleasă Președintă cu 17 vicepreședinți și 8 membri în Biroul Permanent Județean.', date:'2 Oct 2023', img:'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=75', url:'#' },
+  { title:'TSD Satu Mare organizează Workshop Start-Up Nation 2025 în Satu Mare și Tășnad', cat:'Antreprenoriat', excerpt:'Vineri, 11 Aprilie 2025, PSD și TSD Satu Mare au organizat două evenimente despre Start-Up Nation 2025 pentru tineri cu inițiativă antreprenorială din județ. Finanțări de până la 250.000 lei disponibile.', date:'11 Apr 2025', img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=75', url:'#' },
+  { title:'Liga Elevilor Social-Democrați Satu Mare — 67 de elevi la constituire', cat:'Educație', excerpt:'TSD Satu Mare a lansat Liga Elevilor Social-Democrați, o structură dedicată elevilor din județ. La ședința de constituire au participat 67 de elevi din mai multe licee sătmărene, dornici să se implice civic.', date:'2024', img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=75', url:'#' },
+];
+
+const MONTHS_RO=['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'];
+const DAYS_SHORT=['Lu','Ma','Mi','Jo','Vi','Sâ','Du'];
+
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+
+// ── COOKIE ──
+(function(){
+  const b=$('#cookie-banner');
+  if(localStorage.getItem('tsd_cookie')){b.classList.add('hidden');return;}
+  $('#accept-all').onclick=()=>{localStorage.setItem('tsd_cookie','all');b.classList.add('hidden');};
+  $('#accept-ess').onclick=()=>{localStorage.setItem('tsd_cookie','essential');b.classList.add('hidden');};
+})();
+
+// ── ALERT ──
+(function(){
+  if(sessionStorage.getItem('tsd_alert')){$('#alert').classList.add('hidden');return;}
+  $('#alert-close').onclick=()=>{$('#alert').classList.add('hidden');sessionStorage.setItem('tsd_alert','1');};
+})();
+
+// ── HEADER ──
+(function(){
+  const hdr=$('.site-header'),btn=$('#header-cta-btn'),hamburger=$('#hamburger'),menu=$('#mobile-menu');
+  window.addEventListener('scroll',()=>{
+    hdr.classList.toggle('scrolled',scrollY>30);
+    if(btn) btn.style.display=scrollY>200?'inline-flex':'none';
+  },{passive:true});
+  hamburger.onclick=()=>{
+    const open=hamburger.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded',open);
+    menu.classList.toggle('open',open);
+    menu.setAttribute('aria-hidden',!open);
+    document.body.style.overflow=open?'hidden':'';
+  };
+  $$('.mobile-nav-link').forEach(l=>l.addEventListener('click',()=>{
+    hamburger.classList.remove('open');hamburger.setAttribute('aria-expanded','false');
+    menu.classList.remove('open');menu.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.classList.contains('open'))hamburger.click();});
+  const sections=$$('section[id]'),links=$$('.nav-link');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting) links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));});
+  },{threshold:.3});
+  sections.forEach(s=>io.observe(s));
+})();
+
+// ── HERO SLIDER ──
+(function(){
+  const imgs=$$('.hero-img'),dotsContainer=$('#slider-dots');
+  let cur=0;
+  imgs.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='slider-dot'+(i===0?' active':'');
+    d.setAttribute('aria-label',`Slide ${i+1} din ${imgs.length}`);
+    d.setAttribute('role','tab');
+    d.setAttribute('aria-selected',i===0?'true':'false');
+    d.onclick=()=>{clearInterval(iv);goTo(i);iv=setInterval(()=>goTo((cur+1)%imgs.length),6500);};
+    dotsContainer.appendChild(d);
+  });
+  function goTo(n){
+    imgs[cur].classList.remove('active');dotsContainer.children[cur].classList.remove('active');dotsContainer.children[cur].setAttribute('aria-selected','false');
+    cur=n;imgs[cur].classList.add('active');dotsContainer.children[cur].classList.add('active');dotsContainer.children[cur].setAttribute('aria-selected','true');
+  }
+  let iv=setInterval(()=>goTo((cur+1)%imgs.length),6500);
+})();
+
+// ── COUNTERS ──
+(function(){
+  const counters=$$('[data-count]');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      const el=e.target,target=parseInt(el.dataset.count,10);
+      if(isNaN(target)){io.unobserve(el);return;}
+      const suffix=el.querySelector('.impact-suffix')?.textContent||'';
+      const dur=2000,start=performance.now();
+      function step(now){
+        const p=Math.min((now-start)/dur,1),ease=1-Math.pow(1-p,3);
+        el.querySelector('.impact-suffix')
+          ? el.childNodes[0].textContent=Math.round(ease*target).toLocaleString('ro-RO')
+          : el.textContent=Math.round(ease*target).toLocaleString('ro-RO');
+        if(p<1)requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      io.unobserve(el);
+    });
+  },{threshold:.5});
+  counters.forEach(c=>io.observe(c));
+})();
+
+// ── HERO STAT COUNTERS ──
+(function(){
+  $$('.hero-stat-num[data-count]').forEach(el=>{
+    const io=new IntersectionObserver(entries=>{
+      if(!entries[0].isIntersecting)return;
+      const target=parseInt(el.dataset.count,10);
+      const dur=1800,start=performance.now();
+      function step(now){
+        const p=Math.min((now-start)/dur,1),ease=1-Math.pow(1-p,3);
+        el.textContent=Math.round(ease*target).toLocaleString('ro-RO');
+        if(p<1)requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      io.unobserve(el);
+    },{threshold:.5});
+    io.observe(el);
+  });
+})();
+
+// ── LEADERSHIP ──
+(function(){
+  $('#leadership-grid').innerHTML=LEADERSHIP.map((l,i)=>`
+    <div class="leader-card${l.president?' president':''}" role="listitem" data-reveal data-reveal-delay="${i%3}">
+      <div class="leader-header">
+        <div class="leader-avatar">${l.initials}</div>
+        <div>
+          <div class="leader-role">${l.role}</div>
+          <div class="leader-name">${l.name}</div>
+        </div>
+      </div>
+      <div class="leader-divider"></div>
+      <p class="leader-org">${l.org}</p>
+      <p class="leader-bio" style="margin-top:10px">${l.bio}</p>
+    </div>
+  `).join('');
+  observeReveal();
+})();
+
+// ── ACTIVITIES ──
+(function(){
+  const catLabel={caritabil:'Caritabil',voluntariat:'Voluntariat',educational:'Educațional',antreprenoriat:'Antreprenoriat'};
+  const statusLabel={activ:'● Activ',planificat:'● Planificat',finalizat:'✓ Finalizat'};
+  $('#activities-grid').innerHTML=ACTIVITIES.map((a,i)=>`
+    <article class="activity-card" data-cat="${a.cat}" role="listitem" data-reveal data-reveal-delay="${i%3}">
+      <div class="activity-img" style="background-image:url('${a.img}')">
+        <div class="activity-img-overlay"></div>
+        <span class="activity-cat">${catLabel[a.cat]||a.cat}</span>
+        <span class="activity-status ${a.status}">${statusLabel[a.status]||a.status}</span>
+      </div>
+      <div class="activity-body">
+        <h3 class="activity-title">${a.title}</h3>
+        <p class="activity-desc">${a.desc}</p>
+        ${a.progress<100?`<div class="progress-wrap"><div class="progress-header"><span>Progres</span><span>${a.progress}%</span></div><div class="progress-track"><div class="progress-fill" style="width:${a.progress}%"></div></div></div>`:''}
+        <div class="activity-footer">
+          <span>${a.vol>0?`👥 ${a.vol} voluntari activi`:'✓ Proiect finalizat'}</span>
+          ${a.status==='activ'?`<a href="#contact" class="btn btn-sm btn-primary" style="padding:7px 14px;font-size:.66rem">Implică-te</a>`:''}
+        </div>
+      </div>
+    </article>
+  `).join('');
+
+  $$('.filter-btn').forEach(btn=>{
+    btn.onclick=()=>{
+      $$('.filter-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-pressed','false');});
+      btn.classList.add('active');btn.setAttribute('aria-pressed','true');
+      const f=btn.dataset.filter;
+      $$('.activity-card').forEach(c=>c.classList.toggle('hidden',f!=='all'&&c.dataset.cat!==f));
+    };
+  });
+
+  // Progress bar animation
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) e.target.querySelectorAll('.progress-fill').forEach(f=>{f.style.width=f.style.width;});
+    });
+  },{threshold:.3});
+  $$('.activity-card').forEach(c=>io.observe(c));
+  observeReveal();
+})();
+
+// ── EVENTS ──
+(function(){
+  const catIcon={sedinta:'🗣️',voluntariat:'🤝',caritabil:'❤️',educational:'📚',workshop:'💼'};
+  const monthsShort=['Ian','Feb','Mar','Apr','Mai','Iun','Iul','Aug','Sep','Oct','Nov','Dec'];
+  const evList=$('#events-list');
+  const upcoming=$('#upcoming-list');
+  const now=new Date();
+
+  // Sort events by date
+  const sorted=[...EVENTS].sort((a,b)=>new Date(a.year,a.month-1,a.day)-new Date(b.year,b.month-1,b.day));
+  const future=sorted.filter(e=>new Date(e.year,e.month-1,e.day)>=new Date(now.getFullYear(),now.getMonth(),now.getDate()));
+
+  evList.innerHTML=sorted.map((e,i)=>`
+    <div class="event-item" id="event-${e.id}" role="listitem" data-reveal data-reveal-delay="${i%3}" data-id="${e.id}" tabindex="0" aria-expanded="false">
+      <div class="event-date-box">
+        <span class="event-day">${e.day}</span>
+        <span class="event-month">${monthsShort[e.month-1]}</span>
+      </div>
+      <div class="event-info">
+        <p class="event-title">${catIcon[e.cat]||'📅'} ${e.title}</p>
+        <div class="event-meta">
+          <span>🕐 ${e.time}</span>
+          <span>📍 ${e.location}</span>
+          <span>👥 ${e.spots} locuri</span>
+        </div>
+        <p class="event-desc">${e.desc}</p>
+      </div>
+      <div class="event-rsvp">
+        <button class="btn btn-primary btn-sm rsvp-btn" data-id="${e.id}" data-title="${e.title}">Participă</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Expandable events
+  $$('.event-item').forEach(item=>{
+    item.addEventListener('click',function(e){
+      if(e.target.closest('.rsvp-btn'))return;
+      const expanded=this.classList.toggle('expanded');
+      this.setAttribute('aria-expanded',expanded);
+    });
+    item.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();item.click();}});
+  });
+
+  // Upcoming sidebar
+  upcoming.innerHTML=(future.slice(0,3)).map(e=>`
+    <div class="upcoming-item">
+      <div class="upcoming-dot"></div>
+      <div class="upcoming-info">
+        <div class="upcoming-event-title">${e.title}</div>
+        <div class="upcoming-event-date">${e.day} ${MONTHS_RO[e.month-1].slice(0,3)} ${e.year} · ${e.time}</div>
+      </div>
+    </div>
+  `).join('')||'<p style="font-size:.85rem;color:var(--muted);padding:10px 0">Nu există evenimente viitoare programate.</p>';
+
+  observeReveal();
+})();
+
+// ── MINI CALENDAR ──
+(function(){
+  const now=new Date();
+  let calYear=now.getFullYear(),calMonth=now.getMonth();
+  const eventDates=new Set(EVENTS.map(e=>`${e.year}-${e.month}-${e.day}`));
+
+  function renderCal(){
+    const lbl=$('#cal-label');lbl.textContent=MONTHS_RO[calMonth]+' '+calYear;
+    const grid=$('#cal-grid');
+    // Header
+    let html=DAYS_SHORT.map(d=>`<div class="cal-header">${d}</div>`).join('');
+    const first=new Date(calYear,calMonth,1).getDay();
+    const offset=(first===0?6:first-1);
+    const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+    const prevDays=new Date(calYear,calMonth,0).getDate();
+    for(let i=offset-1;i>=0;i--) html+=`<div class="cal-day other-month">${prevDays-i}</div>`;
+    for(let d=1;d<=daysInMonth;d++){
+      const isToday=(d===now.getDate()&&calMonth===now.getMonth()&&calYear===now.getFullYear());
+      const hasEvent=eventDates.has(`${calYear}-${calMonth+1}-${d}`);
+      html+=`<div class="cal-day${isToday?' today':''}${hasEvent?' has-event':''}" title="${hasEvent?'Eveniment în această zi':''}">${d}</div>`;
+    }
+    const remaining=(7-((offset+daysInMonth)%7))%7;
+    for(let d=1;d<=remaining;d++) html+=`<div class="cal-day other-month">${d}</div>`;
+    grid.innerHTML=html;
+  }
+
+  renderCal();
+  $('#cal-prev').onclick=()=>{calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCal();};
+  $('#cal-next').onclick=()=>{calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCal();};
+})();
+
+// ── NEWS ──
+(function(){
+  $('#news-grid').innerHTML=NEWS.map((n,i)=>`
+    <article class="news-card" role="listitem" data-reveal data-reveal-delay="${i%3}">
+      <div class="news-img" style="background-image:url('${n.img}');background-size:cover;background-position:center"></div>
+      <div class="news-body">
+        <p class="news-cat">${n.cat}</p>
+        <h3 class="news-title"><a href="${n.url}">${n.title}</a></h3>
+        <p class="news-excerpt">${n.excerpt}</p>
+        <div class="news-footer">
+          <span>📅 ${n.date}</span>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="share-row">
+              <button class="share-btn" data-net="fb" data-url="${n.url}" aria-label="Distribuie pe Facebook">FB</button>
+              <button class="share-btn" data-net="wa" data-url="${n.url}" aria-label="Distribuie pe WhatsApp">WA</button>
+            </div>
+            <a href="${n.url}" class="news-read-more" aria-label="Citește mai mult despre ${n.title}">Citește <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </article>
+  `).join('');
+  $$('.share-btn').forEach(b=>b.onclick=()=>{
+    const url=encodeURIComponent(location.origin+b.dataset.url);
+    const title=encodeURIComponent(b.closest('.news-card').querySelector('.news-title')?.textContent||'');
+    const link=b.dataset.net==='fb'?`https://www.facebook.com/sharer/sharer.php?u=${url}`:`https://api.whatsapp.com/send?text=${title}%20${url}`;
+    window.open(link,'_blank','width=600,height=400');
+  });
+  observeReveal();
+})();
+
+// ── RSVP MODAL ──
+$$('.rsvp-btn').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const eventName=btn.dataset.title||'Eveniment TSD Satu Mare';
+    $('#rsvp-event-name').textContent=eventName;
+    $('#rsvp-form').reset();
+    $('#r-response').hidden=true;
+    $$('#rsvp-form .form-input').forEach(i=>{i.classList.remove('error','valid');});
+    $$('#rsvp-form .field-err').forEach(e=>{e.textContent='';});
+    $('#rsvp-modal').classList.remove('hidden');
+    document.body.style.overflow='hidden';
+    setTimeout(()=>$('#r-name').focus(),100);
+  });
+});
+function closeRsvp(){$('#rsvp-modal').classList.add('hidden');document.body.style.overflow='';}
+$('#rsvp-close').onclick=closeRsvp;
+$('#rsvp-modal').onclick=e=>{if(e.target===$('#rsvp-modal'))closeRsvp();};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#rsvp-modal').classList.contains('hidden'))closeRsvp();});
+
+$('#rsvp-form').onsubmit=async function(e){
+  e.preventDefault();
+  if(!validateField('r-name','r-name-err')||!validateField('r-email','r-email-err'))return;
+  if(!$('#r-gdpr').checked){$('#r-gdpr-err').textContent='Trebuie să accepți politica de confidențialitate.';return;}
+  $('#r-gdpr-err').textContent='';
+  const btn=$('#r-submit');btn.disabled=true;$('#r-btn-txt').hidden=true;$('#r-btn-load').hidden=false;
+  try{
+    await new Promise(r=>setTimeout(r,1400));
+    const resp=$('#r-response');
+    resp.className='form-msg success';resp.textContent=`✅ Confirmat! Vei primi email la ${$('#r-email').value}. Ne vedem la eveniment! 🎉`;resp.hidden=false;
+    this.reset();setTimeout(closeRsvp,3500);
+  }catch{
+    const resp=$('#r-response');resp.className='form-msg error';resp.textContent='❌ Eroare. Încearcă din nou sau contactează-ne.';resp.hidden=false;
+  }finally{btn.disabled=false;$('#r-btn-txt').hidden=false;$('#r-btn-load').hidden=true;}
+};
+
+// ── MEMBER FORM ──
+$('#member-form').onsubmit=async function(e){
+  e.preventDefault();
+  const ok=['m-fname','m-lname','m-email','m-phone','m-city'].map(id=>validateField(id,id+'-err')).every(Boolean);
+  if(!$('#m-gdpr').checked){alert('Trebuie să accepți politica de confidențialitate.');return;}
+  if(!ok)return;
+  const btn=$('#m-submit');btn.disabled=true;$('#m-btn-txt').hidden=true;$('#m-btn-load').hidden=false;
+  await new Promise(r=>setTimeout(r,1600));
+  const resp=$('#m-response');
+  resp.className='form-msg success';
+  resp.textContent=`✅ Cererea ta a fost trimisă! Te vom contacta la ${$('#m-email').value} în maxim 48 de ore. Bine ai venit în TSD Satu Mare! 🎉`;
+  resp.hidden=false;this.reset();
+  btn.disabled=false;$('#m-btn-txt').hidden=false;$('#m-btn-load').hidden=true;
+};
+
+// ── VOLUNTEER FORM ──
+$('#volunteer-form').onsubmit=async function(e){
+  e.preventDefault();
+  if(!validateField('v-name','v-name-err')||!validateField('v-email','v-email-err'))return;
+  if(!$('#v-gdpr').checked){alert('Trebuie să accepți politica de confidențialitate.');return;}
+  const btn=$('#v-submit');btn.disabled=true;$('#v-btn-txt').hidden=true;$('#v-btn-load').hidden=false;
+  await new Promise(r=>setTimeout(r,1400));
+  const resp=$('#v-response');
+  resp.className='form-msg success';
+  resp.textContent=`✅ Înregistrat ca voluntar! Te vom contacta la ${$('#v-email').value} înainte de următoarea acțiune. Mulțumim! 💪`;
+  resp.hidden=false;this.reset();
+  btn.disabled=false;$('#v-btn-txt').hidden=false;$('#v-btn-load').hidden=true;
+};
+
+// ── NEWSLETTER ──
+$('#nl-form').onsubmit=async function(e){
+  e.preventDefault();
+  const inp=$('#nl-email'),msg=$('#nl-msg');
+  inp.classList.remove('error','valid');msg.hidden=true;
+  if(!inp.value||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value)){
+    inp.classList.add('error');msg.className='form-msg error';msg.textContent='⚠️ Introduceți un email valid.';msg.hidden=false;return;
+  }
+  const btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Se înscrie…';
+  await new Promise(r=>setTimeout(r,1200));
+  inp.value='';inp.classList.add('valid');
+  msg.className='form-msg success';msg.textContent='🎉 Ești abonat! Verifică și folderul Spam pentru prima dată. Te așteptăm în inbox!';msg.hidden=false;
+  btn.disabled=false;btn.textContent='Abonează-mă';
+};
+
+// ── CONTACT ──
+$('#contact-form').onsubmit=async function(e){
+  e.preventDefault();
+  const ok=validateField('c-name','c-name-err')&&validateField('c-email','c-email-err')&&validateField('c-msg','c-msg-err');
+  if(!$('#c-gdpr').checked){alert('Trebuie să accepți politica de confidențialitate.');return;}
+  if(!ok)return;
+  const btn=$('#c-submit');btn.disabled=true;$('#c-btn-text').hidden=true;$('#c-btn-load').hidden=false;
+  await new Promise(r=>setTimeout(r,1400));
+  const resp=$('#c-msg-resp');
+  resp.className='form-msg success';resp.textContent='✅ Mulțumim! Am primit mesajul tău. Revenim în maxim 24 de ore.';resp.hidden=false;
+  this.reset();btn.disabled=false;$('#c-btn-text').hidden=false;$('#c-btn-load').hidden=true;
+};
+
+// ── VALIDATION ──
+function validateField(inputId,errId){
+  const inp=$('#'+inputId),err=$('#'+errId);
+  if(!inp){return true;}
+  inp.classList.remove('error','valid');if(err)err.textContent='';
+  if(!inp.value.trim()){inp.classList.add('error');if(err)err.textContent='Câmpul este obligatoriu.';return false;}
+  if(inp.type==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value)){inp.classList.add('error');if(err)err.textContent='Email invalid (ex: ion@email.ro)';return false;}
+  if(inp.type==='tel'&&inp.value.replace(/\s/g,'').length<10){inp.classList.add('error');if(err)err.textContent='Număr de telefon invalid.';return false;}
+  inp.classList.add('valid');return true;
+}
+
+// ── SCROLL REVEAL ──
+function observeReveal(){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  $$('[data-reveal]:not(.visible)').forEach(el=>io.observe(el));
+}
+observeReveal();
+
+// ── SMOOTH SCROLL ──
+$$('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href').slice(1);
+    const target=document.getElementById(id);
+    if(!target)return;
+    e.preventDefault();
+    const offset=$('.site-header').offsetHeight+12;
+    const top=target.getBoundingClientRect().top+window.scrollY-offset;
+    window.scrollTo({top,behavior:'smooth'});
+  });
+});
+
+// ── CONTACT GRID RESPONSIVE ──
+(function(){
+  const grid=$('.contact-grid');
+  if(!grid)return;
+  const update=()=>grid.style.gridTemplateColumns=window.innerWidth>=900?'1fr 1fr':'1fr';
+  update();window.addEventListener('resize',update,{passive:true});
+})();
+</script>
+</body>
+</html>
