@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+ <!-- PWA Manifest (embedded) -->
+<link rel="manifest" href="data:application/manifest+json,{%22name%22:%22SatuMareLive...}"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,..."/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,..."/>
+  
+<!-- Mobile Web App -->
+<meta name="theme-color" content="#0a0c10"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="SatuMareLive"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CivicMap Satu Mare — Monitor Urban</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:#0a0c10;--surface:#111318;--surface2:#1a1d24;--border:#252830;
+      --accent:#00d4ff;--accent2:#7c3aed;--text:#e8eaf0;--text-muted:#6b7280;
+      --red:#ff4757;--yellow:#ffd32a;--green:#2ed573;
+      --mono:'Space Mono',monospace;--sans:'DM Sans',sans-serif;--pw:380px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--sans);background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
+
+    /* ── HEADER ── */
+    header{
+      position:fixed;top:0;left:0;right:0;height:56px;
+      background:rgba(10,12,16,.94);backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;padding:0 20px;z-index:200;gap:20px;
+    }
+    .logo{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--accent);display:flex;align-items:center;gap:8px}
+    .logo-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 12px var(--accent);animation:pdot 2s ease-in-out infinite}
+    @keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.65)}}
+    .hstats{display:flex;gap:12px;margin-left:16px}
+    .spill{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:100px;border:1px solid var(--border);background:var(--surface)}
+    .dot{width:6px;height:6px;border-radius:50%}
+    .dr{background:var(--red);box-shadow:0 0 8px var(--red)}
+    .dy{background:var(--yellow);box-shadow:0 0 8px var(--yellow)}
+    .dg{background:var(--green);box-shadow:0 0 8px var(--green)}
+    .hright{margin-left:auto;display:flex;align-items:center;gap:10px}
+    .live-b{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:.1em}
+    .live-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
+    .btn{font-family:var(--mono);font-size:11px;padding:7px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;transition:all .2s;letter-spacing:.05em}
+    .btn:hover{border-color:var(--accent);color:var(--accent)}
+    .btn-a{background:var(--accent);color:#000;border-color:var(--accent)}
+    .btn-a:hover{background:#00b8d9;color:#000}
+
+    /* ── MAP ── */
+    #map{position:fixed;top:56px;left:0;right:0;bottom:0;z-index:1}
+
+    /* ── PANEL ── */
+    #panel{
+      position:fixed;top:56px;right:0;width:var(--pw);height:calc(100vh - 56px);
+      background:rgba(10,12,16,.96);backdrop-filter:blur(24px);
+      border-left:1px solid var(--border);z-index:100;
+      display:flex;flex-direction:column;
+      transform:translateX(0);transition:transform .35s cubic-bezier(.4,0,.2,1);
+    }
+    #panel.hidden{transform:translateX(100%)}
+    .ph{padding:18px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:12px}
+    .pt{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase}
+    .sbox{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;transition:border-color .2s}
+    .sbox:focus-within{border-color:var(--accent)}
+    .sbox input{background:none;border:none;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;flex:1}
+    .sbox input::placeholder{color:var(--text-muted)}
+    .frow{display:flex;gap:6px;flex-wrap:wrap}
+    .fchip{font-family:var(--mono);font-size:10px;padding:4px 10px;border-radius:100px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .2s;letter-spacing:.05em}
+    .fchip:hover,.fchip.active{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.08)}
+    #ilist{flex:1;overflow-y:auto;padding:10px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+
+    /* ── CARDS ── */
+    .icard{
+      background:var(--surface);border:1px solid var(--border);border-radius:10px;
+      padding:14px;margin-bottom:8px;cursor:pointer;transition:all .2s;
+      position:relative;overflow:hidden;
+    }
+    .icard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px 0 0 2px}
+    .icard.s-activ::before{background:var(--red)}
+    .icard.s-lucru::before{background:var(--yellow)}
+    .icard.s-rezolvat::before{background:var(--green)}
+    .icard:hover{border-color:var(--accent);background:var(--surface2);transform:translateX(-2px)}
+    .icard.sel{border-color:var(--accent);background:rgba(0,212,255,.05)}
+    .itop{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px}
+    .itype{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--text-muted);text-transform:uppercase}
+    .sbadge{font-family:var(--mono);font-size:9px;padding:3px 8px;border-radius:100px;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+    .sbadge.activ{background:rgba(255,71,87,.15);color:var(--red);border:1px solid rgba(255,71,87,.3)}
+    .sbadge.lucru{background:rgba(255,211,42,.15);color:var(--yellow);border:1px solid rgba(255,211,42,.3)}
+    .sbadge.rezolvat{background:rgba(46,213,115,.15);color:var(--green);border:1px solid rgba(46,213,115,.3)}
+    .idesc{font-size:13px;line-height:1.5;color:var(--text);margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .imeta{display:flex;justify-content:space-between;align-items:center}
+    .iloc{font-size:11px;color:var(--text-muted)}
+    .idate{font-family:var(--mono);font-size:10px;color:var(--text-muted)}
+    .ssel{width:100%;margin-top:10px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:11px;padding:6px 10px;cursor:pointer;outline:none;transition:border-color .2s}
+    .ssel:hover{border-color:var(--accent)}
+    .delbtn{width:100%;margin-top:6px;background:rgba(255,71,87,.08);border:1px solid rgba(255,71,87,.25);border-radius:6px;color:var(--red);font-family:var(--mono);font-size:10px;padding:6px 10px;cursor:pointer;transition:all .2s;letter-spacing:.05em}
+    .delbtn:hover{background:rgba(255,71,87,.2);border-color:var(--red)}
+    .empty-st{padding:40px 20px;text-align:center;color:var(--text-muted);font-family:var(--mono);font-size:12px;line-height:2.4}
+
+    /* ── POPUP ── */
+    .maplibregl-popup-content{
+      background:var(--surface)!important;border:1px solid var(--border)!important;
+      border-radius:12px!important;padding:16px!important;color:var(--text)!important;
+      box-shadow:0 20px 60px rgba(0,0,0,.75)!important;min-width:240px;font-family:var(--sans);
+    }
+    .maplibregl-popup-tip{display:none!important}
+    .maplibregl-popup-close-button{color:var(--text-muted)!important;font-size:16px!important;right:10px!important;top:10px!important}
+    .ptype{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px}
+    .pdesc{font-size:13px;line-height:1.5;margin-bottom:10px;color:var(--text)}
+    .pfoot{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text-muted);font-family:var(--mono)}
+    .psel{width:100%;margin-top:10px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:10px;padding:5px 8px;cursor:pointer;outline:none}
+
+    /* ── CONTROLS ── */
+    #mctrl{position:fixed;bottom:28px;left:16px;z-index:100;display:flex;flex-direction:column;gap:8px}
+    .mbtn{width:40px;height:40px;background:rgba(10,12,16,.92);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(12px)}
+    .mbtn:hover{border-color:var(--accent);color:var(--accent)}
+    .mbtn.act{border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.1)}
+
+    /* ── TOGGLE ── */
+    #ptog{position:fixed;top:50%;z-index:150;transition:right .35s cubic-bezier(.4,0,.2,1);right:var(--pw);transform:translateY(-50%)}
+    #ptog.off{right:0}
+    .tgbtn{width:22px;height:52px;background:rgba(10,12,16,.92);border:1px solid var(--border);border-right:none;border-radius:8px 0 0 8px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:11px;transition:all .2s;backdrop-filter:blur(12px)}
+    .tgbtn:hover{color:var(--accent);border-color:var(--accent)}
+
+    /* ── LOADER ── */
+    #loading{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .6s}
+    #loading.out{opacity:0;pointer-events:none}
+    .ll{font-family:var(--mono);font-size:24px;font-weight:700;color:var(--accent);letter-spacing:.1em}
+    .ls{font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;margin-top:-12px}
+    .lbar{width:220px;height:2px;background:var(--border);border-radius:2px;overflow:hidden}
+    .lfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));animation:lf 2.2s ease-in-out forwards}
+    @keyframes lf{0%{width:0%}55%{width:65%}100%{width:100%}}
+    #lstat{font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.1em}
+
+    /* ── TOAST ── */
+    #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:300;display:flex;flex-direction:column;gap:8px;align-items:center}
+    .tmsg{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;animation:tin .3s ease;white-space:nowrap}
+    @keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    /* ── FOOTER ── */
+    #lupd{padding:10px 16px;border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.05em;display:flex;align-items:center;justify-content:space-between}
+    .rbtn{background:none;border:none;color:var(--text-muted);cursor:pointer;padding:2px 6px;border-radius:4px;font-size:14px;transition:color .2s}
+    .rbtn:hover{color:var(--accent)}
+    .rbtn.spin{animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── MODAL ── */
+    #modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);align-items:center;justify-content:center}
+    .mbox{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:440px;max-width:95vw;max-height:90vh;overflow-y:auto;position:relative}
+    .mtit{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--text-muted);margin-bottom:20px}
+    .mcls{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer}
+    .field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+    .field label{font-size:11px;color:var(--text-muted);font-family:var(--mono)}
+    .field input,.field select,.field textarea{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .2s}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+
+    /* ── MAPLIBRE OVERRIDES ── */
+    .maplibregl-ctrl-group{background:rgba(10,12,16,.92)!important;border:1px solid var(--border)!important;border-radius:8px!important}
+    .maplibregl-ctrl-group button{background-color:transparent!important}
+    .maplibregl-ctrl-icon{filter:invert(1)!important}
+    .maplibregl-ctrl-attrib{background:rgba(10,12,16,.7)!important;color:var(--text-muted)!important;font-size:9px!important}
+    .maplibregl-ctrl-attrib a{color:var(--text-muted)!important}
+
+    /* ── MOBILE ── */
+    @media(max-width:600px){
+      :root{--pw:100vw}
+      #panel{top:auto;bottom:0;height:50vh;width:100%;border-left:none;border-top:1px solid var(--border)}
+      #panel.hidden{transform:translateY(100%)}
+      #ptog{top:auto;bottom:calc(50vh + 8px);right:10px!important;transform:none}
+      .tgbtn{width:40px;height:40px;border-radius:8px;border:1px solid var(--border)!important;border-right:1px solid var(--border)!important}
+      #map{bottom:50vh}
+      #mctrl{bottom:calc(50vh+10px)}
+      .hstats{display:none}
+      <script>
+// Copy the ENTIRE <script> block from index-PWA-EMBEDDED.html
+// (the one with serviceWorker registration and install prompt)
+</script>
+    }
+  </style>
+</head>
+<body>
+```javascript
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(reg => console.log('✅ SW registered'))
+    .catch(err => console.warn('⚠️ SW failed:', err));
+}
+
+// PWA Install Prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  showInstallPrompt();
+});
+
+function showInstallPrompt() {
+  const prompt = document.createElement('div');
+  prompt.innerHTML = `
+    <div style="position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,#00d4ff,#7c3aed);padding:16px;border-radius:12px;z-index:999;font-family:monospace;box-shadow:0 8px 32px rgba(0,212,255,.3)">
+      <div style="color:#000;margin-bottom:12px">
+        <div style="font-weight:bold;margin-bottom:4px">📱 Instalează SatuMareLive</div>
+        <div style="font-size:12px;opacity:.9">Offline + Home screen</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="installApp()" style="flex:1;padding:8px;background:#000;color:#00d4ff;border:none;border-radius:6px;font-weight:bold;cursor:pointer">↓ INSTALEAZĂ</button>
+        <button onclick="this.parentElement.parentElement.remove()" style="padding:8px 12px;background:rgba(0,0,0,.2);color:#000;border:1px solid #000;border-radius:6px;cursor:pointer">✕</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(prompt);
+}
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(choice => {
+      if (choice.outcome === 'accepted') console.log('✅ App installed');
+      deferredPrompt = null;
+      document.querySelector('[style*="position:fixed"]')?.parentElement?.remove();
+    });
+  }
+}
+</script>
+```
+<!-- LOADING -->
+<div id="loading">
+  <div class="ll">CIVICMAP</div>
+  <div class="ls">SATU MARE</div>
+  <div class="lbar"><div class="lfill"></div></div>
+  <div id="lstat">SE INIȚIALIZEAZĂ HARTA 3D...</div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo"><div class="logo-dot"></div>CIVICMAP / SATU MARE</div>
+  <div class="hstats">
+    <div class="spill"><div class="dot dr"></div><span id="ca">0</span>&nbsp;ACTIVE</div>
+    <div class="spill"><div class="dot dy"></div><span id="cl">0</span>&nbsp;ÎN LUCRU</div>
+    <div class="spill"><div class="dot dg"></div><span id="cr">0</span>&nbsp;REZOLVATE</div>
+  </div>
+  <div class="hright">
+    <div class="live-b"><div class="live-dot"></div>LIVE</div>
+    <button class="btn" onclick="toggleStats()" id="stats-btn" title="Statistici">📊</button>
+    <button class="btn" onclick="toggleAdmin()" id="admin-btn" title="Mod admin">🔐</button>
+    <button class="btn btn-a" onclick="openModal()">+ SESIZARE</button>
+  </div>
+</header>
+
+<!-- MAP -->
+<div id="map"></div>
+
+<!-- MAP CONTROLS -->
+<div id="mctrl">
+  <button class="mbtn" title="Reset" onclick="resetView()">⌂</button>
+  <button class="mbtn" id="brot" title="Rotire" onclick="toggleRotate()">↺</button>
+  <button class="mbtn" id="b3d"  title="3D ON/OFF" onclick="toggle3D()" style="font-size:11px;font-family:var(--mono)">3D</button>
+</div>
+
+<!-- PANEL TOGGLE -->
+<div id="ptog">
+  <button class="tgbtn" id="ptbtn" onclick="togglePanel()">❯</button>
+</div>
+
+<!-- PANEL -->
+<div id="panel">
+  <div class="ph">
+    <div class="pt">📋 SESIZĂRI — SATU MARE</div>
+    <div class="sbox">
+      <span style="color:var(--text-muted)">🔍</span>
+      <input id="sinp" type="text" placeholder="Caută sesizare..." oninput="filterIssues()" autocomplete="off" name="civicmap-search"/>
+    </div>
+    <div class="frow">
+      <div class="fchip active" data-f="toate"    onclick="setFilter(this)">TOATE</div>
+      <div class="fchip" data-f="activ"    onclick="setFilter(this)">🔴 ACTIVE</div>
+      <div class="fchip" data-f="lucru"    onclick="setFilter(this)">🟡 ÎN LUCRU</div>
+      <div class="fchip" data-f="rezolvat" onclick="setFilter(this)">🟢 REZOLVATE</div>
+    </div>
+  </div>
+  <div id="ilist"><div class="empty-st">SE ÎNCARCĂ...<br/>⟳</div></div>
+  <div id="lupd">
+    <span id="ut">Ultima actualizare: —</span>
+    <button class="rbtn" id="rb" onclick="manualRefresh()" title="Actualizează">↻</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- STATS MODAL -->
+<div id="stats-modal" style="display:none;position:fixed;inset:0;z-index:550;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);align-items:flex-start;justify-content:center;padding-top:70px;overflow-y:auto;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:680px;max-width:96vw;position:relative;margin-bottom:20px;">
+    <button onclick="toggleStats()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;">✕</button>
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--text-muted);margin-bottom:24px;">📊 STATISTICI SESIZĂRI — SATU MARE</div>
+
+    <!-- Summary cards -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:24px;font-weight:700;color:var(--red);" id="stat-total">0</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:4px;">TOTAL</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:24px;font-weight:700;color:var(--yellow);" id="stat-active">0</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:4px;">ACTIVE</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:24px;font-weight:700;color:var(--green);" id="stat-resolved">0</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:4px;">REZOLVATE</div>
+      </div>
+    </div>
+
+    <!-- Chart sesizari pe luna -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-bottom:16px;letter-spacing:.1em;">SESIZĂRI PE LUNĂ</div>
+      <canvas id="chart-monthly" height="180"></canvas>
+    </div>
+
+    <!-- Chart pe tip problema -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px;">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-bottom:16px;letter-spacing:.1em;">SESIZĂRI PE TIP</div>
+      <canvas id="chart-types" height="200"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="login-modal" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;width:360px;max-width:95vw;position:relative;">
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--text-muted);margin-bottom:24px;">🔐 AUTENTIFICARE ADMIN</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);font-family:var(--mono);">EMAIL</label>
+        <input id="login-email" type="email" placeholder="admin@email.com" autocomplete="username" style="width:100%;margin-top:6px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;"/>
+      </div>
+      <div>
+        <label style="font-size:11px;color:var(--text-muted);font-family:var(--mono);">PAROLĂ</label>
+        <input id="login-password" type="password" placeholder="••••••••" autocomplete="current-password" style="width:100%;margin-top:6px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:var(--sans);font-size:13px;outline:none;"/>
+      </div>
+      <div id="login-error" style="font-size:11px;color:var(--red);font-family:var(--mono);display:none;"></div>
+      <button onclick="doLogin()" style="width:100%;padding:12px;background:var(--accent);color:#000;border:none;border-radius:8px;font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.05em;margin-top:4px;">INTRĂ CA ADMIN →</button>
+      <button onclick="closeLoginModal()" style="width:100%;padding:10px;background:none;color:var(--text-muted);border:1px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:11px;cursor:pointer;">ANULEAZĂ</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal">
+  <div class="mbox">
+    <button class="mcls" onclick="closeModal()">✕</button>
+    <div class="mtit">ADAUGĂ SESIZARE NOUĂ</div>
+    <div class="field">
+      <label>LOCAȚIE *</label>
+      <input id="fl" placeholder="ex: Str. Mihai Eminescu 10" oninput="onAddrInput()"/>
+      <div id="addr-status" style="font-size:11px;font-family:var(--mono);margin-top:6px;display:none;"></div>
+    </div>
+    <div id="mini-map-wrap" style="display:none;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:12px;position:relative;">
+      <div id="mini-map" style="width:100%;height:200px;"></div>
+      <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(10,12,16,.9);border:1px solid var(--accent);border-radius:6px;padding:5px 12px;font-family:var(--mono);font-size:10px;color:var(--accent);pointer-events:none;white-space:nowrap;">
+        🖱️ TRAGE PINUL PENTRU POZIȚIE EXACTĂ
+      </div>
+    </div>
+    <div class="field"><label>TIP PROBLEMĂ *</label>
+      <select id="fc" onchange="updateSubcategories()">
+        <option value="">Selectează categorie...</option>
+        <option value="carari">🛣️ Drumuri & Carosabil</option>
+        <option value="iluminat">💡 Iluminat Public</option>
+        <option value="apa">💧 Apă & Canalizare</option>
+        <option value="transport">🚗 Transport & Circulație</option>
+        <option value="verzi">🌳 Spații Verzi & Copaci</option>
+        <option value="gunoi">🗑️ Gunoi & Salubritate</option>
+        <option value="constructii">🏗️ Construcții & Siguranță</option>
+        <option value="poluare">🌍 Poluare & Mediu</option>
+        <option value="servicii">🏛️ Servicii Publice</option>
+        <option value="educatie">📚 Educație & Cultură</option>
+        <option value="sanatate">🏥 Sănătate & Urgență</option>
+        <option value="parcari">🅿️ Parcări & Trafic</option>
+        <option value="incendiu">🔥 Incendiu & Protecție</option>
+        <option value="zgomot">🔊 Zgomot Nociv</option>
+      </select>
+      <select id="ft" style="margin-top:8px;">
+        <option value="">Selectează tip problemă (opțional)...</option>
+      </select>
+    </div>
+    <div class="field"><label>DESCRIERE *</label><textarea id="fd" rows="3" placeholder="Descrieți problema..."></textarea></div>
+    <div class="field">
+      <label>EMAIL <span style="color:var(--text-muted);font-size:10px;">(OPȚIONAL — pentru notificări status)</span></label>
+      <input id="fe" type="email" placeholder="email@exemplu.com" autocomplete="email"/>
+    </div>
+    <div class="field">
+      <label>📷 FOTO <span style="color:var(--text-muted);font-size:10px;">(OPȚIONAL — max 5MB)</span></label>
+      <input id="photo-input" type="file" accept="image/*"/>
+      <div id="photo-preview" style="margin-top:8px;"></div>
+    </div>
+    <button class="btn btn-a" style="width:100%;padding:12px;font-size:12px;margin-top:4px" onclick="submitIssue()">TRIMITE SESIZAREA →</button>
+    <p style="margin-top:10px;font-size:11px;color:var(--text-muted);text-align:center">Adresa va fi geocodată și marcată pe hartă automat.</p>
+  </div>
+</div>
+
+
+<script src="https://unpkg.com/maplibre-gl@4.5.0/dist/maplibre-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+<script>
+// ═══════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════
+const CFG = {
+  CENTER:  [22.8739, 47.7929],
+  ZOOM:    14.2,
+  PITCH:   52,
+  BEARING: -12,
+  BOUNDS:  [[22.70, 47.70], [23.05, 47.88]],
+  POLL_MS: 15000,
+};
+
+// ═══════════════════════════════════════════════
+// FIREBASE AUTH — autentificare admin sigură
+// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+// EMAILJS CONFIG
+// ═══════════════════════════════════════════════
+const EMAILJS = {
+  PUBLIC_KEY: 'zpkYVrToRnCYF_Ezf',
+  SERVICE_ID: 'service_383pf1o',
+  TEMPLATE_CONFIRM: 'template_2kuk2rs',   // confirmare sesizare nouă
+  TEMPLATE_STATUS:  'template_c7v8l9g',   // notificare schimbare status
+};
+
+function initEmailJS() {
+  try {
+    emailjs.init(EMAILJS.PUBLIC_KEY);
+    console.log('✅ EmailJS initialized successfully');
+  } catch(e) {
+    console.error('❌ EmailJS init error:', e);
+  }
+}
+
+async function sendConfirmEmail(issue, emailUtilizator) {
+  if (!emailUtilizator || !emailUtilizator.includes('@')) return;
+  try {
+    await emailjs.send(EMAILJS.SERVICE_ID, EMAILJS.TEMPLATE_CONFIRM, {
+      email_utilizator: emailUtilizator,
+      locatie: issue.locatie,
+      tip: issue.tip,
+      descriere: issue.descriere,
+      data: issue.data,
+      status: 'ACTIV',
+    });
+    console.log('✓ Email confirmare trimis la:', emailUtilizator);
+  } catch(e) {
+    console.warn('EmailJS confirm error:', e);
+  }
+}
+
+async function sendStatusEmail(issue) {
+  if (!issue.email || !issue.email.includes('@')) return;
+  const mesaje = {
+    lucru:    '🔧 Sesizarea ta este în curs de rezolvare. Echipa lucrează la ea.',
+    rezolvat: '✅ Sesizarea ta a fost rezolvată. Îți mulțumim că ai raportat problema!',
+    activ:    '🔴 Sesizarea ta a fost marcată ca activă și urmează să fie preluată.',
+  };
+  const statusLabel = { activ:'🔴 ACTIV', lucru:'🟡 ÎN LUCRU', rezolvat:'🟢 REZOLVAT' };
+  try {
+    await emailjs.send(EMAILJS.SERVICE_ID, EMAILJS.TEMPLATE_STATUS, {
+      email_utilizator: issue.email,
+      locatie: issue.locatie,
+      tip: issue.tip,
+      status_nou: statusLabel[issue.status] || issue.status,
+      mesaj_status: mesaje[issue.status] || '',
+    });
+    console.log('✓ Email status trimis la:', issue.email);
+  } catch(e) {
+    console.warn('EmailJS status error:', e);
+  }
+}
+
+const FB_CONFIG = {
+  apiKey: 'AIzaSyD2z-bazYmA2YF6p1qaS_6VBcur8BoTzjo',
+  authDomain: 'civicmap-satumare.firebaseapp.com',
+  projectId: 'civicmap-satumare',
+  storageBucket: 'civicmap-satumare.appspot.com'
+};
+
+// 14 CATEGORIES
+const CATEGORIES = {
+  carari: {emoji: '🛣️', name: 'Drumuri & Carosabil', department: 'Serviciul Tehnic', items: ['Groapă în asfalt', 'Asfalt spart', 'Bandă deteriorată', 'Praf pe stradă', 'Zăpadă/gheață', 'Dopuri apă']},
+  iluminat: {emoji: '💡', name: 'Iluminat Public', department: 'Electrice', items: ['Bec defect', 'Lampă căzută', 'Cabluri rupte', 'Lampă piscuri', 'Iluminat defectuos']},
+  apa: {emoji: '💧', name: 'Apă & Canalizare', department: 'Apă-Gaze', items: ['Fuga de apă', 'Gură canalizare blocată', 'Hidrant defect', 'Conductă fisuată', 'Noroi pe stradă', 'Scurgere apă']},
+  transport: {emoji: '🚗', name: 'Transport & Circulație', department: 'Trafic', items: ['Semn defect', 'Semafor defect', 'Cale biciclete deteriorată', 'Marcaj șters', 'Pasaj periculos', 'Stație bus defect']},
+  verzi: {emoji: '🌳', name: 'Spații Verzi & Copaci', department: 'Mediu', items: ['Copac căzut', 'Creangă/frunze înfundate', 'Iarba crescută', 'Gard deteriorat', 'Mobilier urban']},
+  gunoi: {emoji: '🗑️', name: 'Gunoi & Salubritate', department: 'Salubritate', items: ['Container plin', 'Gunoi răspândit', 'Câini vagabonzi', 'Deșeuri industriale', 'Miros grav']},
+  constructii: {emoji: '🏗️', name: 'Construcții & Siguranță', department: 'Inspecție', items: ['Gard prabușit', 'Cărămizi căzute', 'Construcție neautorizată', 'Schelă neasigurată', 'Cădere obiect']},
+  poluare: {emoji: '🌍', name: 'Poluare & Mediu', department: 'Mediu', items: ['Poluare sonoră', 'Poluare aer', 'Apă colorată', 'Praf industrial', 'Poluare luminoasă']},
+  servicii: {emoji: '🏛️', name: 'Servicii Publice', department: 'Administrație', items: ['Birou închis', 'Serviciu prost', 'Personal neprofesionist', 'Informații lipsă', 'Cheltuieli nejustificate']},
+  educatie: {emoji: '📚', name: 'Educație & Cultură', department: 'Educație', items: ['Școală deteriorată', 'Bibliotecă probleme', 'Monument neîngrijit', 'Parc dezactivat', 'Spațiu cultural']},
+  sanatate: {emoji: '🏥', name: 'Sănătate & Urgență', department: 'Sănătate', items: ['Ambulanță lentă', 'Farmacii lipsă', 'Climă spital proastă', 'Medici lipsă']},
+  parcari: {emoji: '🅿️', name: 'Parcări & Trafic', department: 'Trafic', items: ['Parcări insuficiente', 'Parcări ilegale', 'Semne șters', 'Blocaj trafic', 'Taxi neregulat']},
+  incendiu: {emoji: '🔥', name: 'Incendiu & Protecție', department: 'Protecție Civială', items: ['Incendiu/fum', 'Hidrant defect', 'Ieșire blocată', 'Prevenție lipsă', 'Semne pericol']},
+  zgomot: {emoji: '🔊', name: 'Zgomot Nociv', department: 'Mediu', items: ['Construcție noapte', 'Trafic noapte', 'Petreceri zgomotoase', 'Alarme neîntrerupte', 'Cântăreți stradă']}
+};
+
+function getDepartment(tip) {
+  for (let cat in CATEGORIES) {
+    if (CATEGORIES[cat].items.includes(tip)) return CATEGORIES[cat].department;
+  }
+  return 'Nespecificat';
+}
+
+function updateSubcategories() {
+  const catKey = document.getElementById('fc')?.value;
+  const subSelect = document.getElementById('ft');
+  if (!subSelect) return;
+  subSelect.innerHTML = '<option value="">Selectează tip problemă...</option>';
+  if (catKey && CATEGORIES[catKey]) {
+    CATEGORIES[catKey].items.forEach(item => {
+      const opt = document.createElement('option');
+      opt.value = item;
+      opt.textContent = item;
+      subSelect.appendChild(opt);
+    });
+  }
+}
+
+let fbAuth = null;
+let db = null;
+let isAdmin = false;
+
+function initAuth() {
+  if (!firebase?.apps?.length) {
+    firebase.initializeApp(FB_CONFIG);
+  }
+  fbAuth = firebase.auth();
+  db = firebase.database();
+
+  fbAuth.onAuthStateChanged(user => {
+    isAdmin = !!user;
+    const btn = document.getElementById('admin-btn');
+    if (btn) {
+      btn.style.color = isAdmin ? 'var(--accent)' : '';
+      btn.style.borderColor = isAdmin ? 'var(--accent)' : '';
+      btn.title = isAdmin ? `Admin: ${user.email}` : 'Login admin';
+      btn.textContent = isAdmin ? '🔓' : '🔐';
+    }
+    // Resetăm searchQ și search box — browser-ul autofill poate umple cu emailul
+    searchQ = '';
+    const sinp = document.getElementById('sinp');
+    if (sinp) sinp.value = '';
+    // Re-render cu datele existente
+    if (issues.length > 0) {
+      renderList();
+      updateStats();
+    }
+    if (isAdmin) toast(`✓ Bun venit, ${user.email}! Mod admin activ.`, 'rezolvat');
+  });
+}
+
+async function sendAdminNewIssueEmail(issue) {
+  // Trimite notificare ADMIN când se depune o sesizare nouă
+  console.log('🔔 Attempting to send admin notification for issue:', issue.id);
+  console.log('📧 Recipient: robertt.danila@yahoo.com');
+  console.log('📝 EmailJS Service:', EMAILJS.SERVICE_ID);
+  console.log('📄 EmailJS Template:', EMAILJS.TEMPLATE_CONFIRM);
+  
+  try {
+    const response = await emailjs.send(EMAILJS.SERVICE_ID, EMAILJS.TEMPLATE_CONFIRM, {
+      to_email: 'robertt.danila@yahoo.com',
+      email_utilizator: 'Admin CivicMap',
+      locatie: issue.locatie,
+      tip: issue.tip,
+      descriere: issue.descriere + (issue.email ? '\n\n📧 Contact: ' + issue.email : '\n\n⚠️ Fără email de contact'),
+      data: issue.data,
+      status: '🔴 SESIZARE NOUĂ',
+    });
+    console.log('✅ Admin notification sent successfully:', response.status);
+    toast('📧 Notificare admin trimisă!', 'rezolvat');
+  } catch(e) {
+    console.error('❌ Admin email failed:', e.status, e.text || e.message);
+    toast('⚠️ Email admin eșuat: ' + (e.text || e.message), 'activ');
+  }
+}
+
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+
+  try {
+    await fbAuth.signInWithEmailAndPassword(email, pass);
+    closeLoginModal();
+  } catch(e) {
+    errEl.style.display = 'block';
+    errEl.textContent = 'Email sau parolă incorectă!';
+  }
+}
+
+function closeLoginModal() {
+  document.getElementById('login-modal').style.display = 'none';
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').style.display = 'none';
+}
+
+function openLoginModal() {
+  document.getElementById('login-modal').style.display = 'flex';
+  setTimeout(() => document.getElementById('login-email').focus(), 100);
+}
+
+// ═══════════════════════════════════════════════
+// DEMO DATA (coordonate reale Satu Mare)
+// ═══════════════════════════════════════════════
+const DEMO = [
+  {id:'1',locatie:'Piața Libertății, Satu Mare',         tip:'🕳️ Groapă / Carosabil',    descriere:'Groapă adâncă de ~30cm pe trotuar, pericol major pentru pietoni și bicicliști.',  data:'2025-03-18',status:'activ',   lat:47.7929,lng:22.8739},
+  {id:'2',locatie:'Str. Mihai Eminescu 24, Satu Mare',  tip:'💡 Iluminat stradal defect', descriere:'3 stâlpi nefuncționali pe 150m. Zona complet în întuneric noaptea.',              data:'2025-03-17',status:'lucru',   lat:47.7958,lng:22.8813},
+  {id:'3',locatie:'Parcul Dodului, Satu Mare',           tip:'🌳 Copac periculos',         descriere:'Copac cu ramuri uscate deasupra aleii principale. Risc iminent de cădere.',       data:'2025-03-16',status:'activ',   lat:47.7887,lng:22.8648},
+  {id:'4',locatie:'Str. Decebal 5, Satu Mare',           tip:'🗑️ Depozit ilegal',          descriere:'Deșeuri de construcție abandonate lângă bloc. Miros puternic, risc sanitar.',     data:'2025-03-15',status:'rezolvat',lat:47.7968,lng:22.8698},
+  {id:'5',locatie:'Bd. Independenței 100, Satu Mare',   tip:'🚿 Canalizare blocată',       descriere:'Apă stagnantă pe trotuar de 4 zile. Risc alunecare și miros neplăcut.',          data:'2025-03-14',status:'activ',   lat:47.7912,lng:22.8824},
+  {id:'6',locatie:'Str. Avram Iancu 8, Satu Mare',      tip:'🚧 Lucrări neanunțate',       descriere:'Lucrări blochează trotuarul fără semnalizare sau permis vizibil.',               data:'2025-03-13',status:'lucru',   lat:47.7944,lng:22.8759},
+  {id:'7',locatie:'Cartier Micro 16, Satu Mare',         tip:'🏗️ Clădire degradată',       descriere:'Tencuială căzută de pe fațadă. Pericol real pentru trecători.',                  data:'2025-03-12',status:'rezolvat',lat:47.7862,lng:22.8583},
+  {id:'8',locatie:'Str. 1 Decembrie 1918, Satu Mare',   tip:'🚌 Stație deteriorată',       descriere:'Acoperiș rupt, bancă lipsă. Pasagerii stau în ploaie.',                          data:'2025-03-11',status:'activ',   lat:47.7997,lng:22.8779},
+  {id:'9',locatie:'Str. Florilor 3, Satu Mare',          tip:'💡 Cabluri expuse',           descriere:'Stâlp cu cabluri electrice expuse, pericol de electrocutare.',                   data:'2025-03-10',status:'activ',   lat:47.7873,lng:22.8712},
+  {id:'10',locatie:'Piața Vasile Lucaciu, Satu Mare',   tip:'🕳️ Pavele sparte',            descriere:'Pavele rupte pe trecerea de pietoni, pericol pentru persoane cu dizabilități.',  data:'2025-03-09',status:'lucru',   lat:47.7921,lng:22.8672},
+];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let map, issues=[], markers={}, curFilter='toate', searchQ='';
+let panelOn=true, rotating=false, rafId, show3D=true;
+let pickMode=false, pickedLat=null, pickedLng=null;
+const SC = {activ:'#ff4757',lucru:'#ffd32a',rezolvat:'#2ed573'};
+
+// ═══════════════════════════════════════════════
+// MAP STYLE — dark vector tiles (OpenFreeMap, gratuit)
+// ═══════════════════════════════════════════════
+// OpenFreeMap furnizează tiles OpenMapTiles cu clădiri 3D OSM incluse
+// Documentatie: https://openfreemap.org
+const STYLE_URL = 'https://tiles.openfreemap.org/styles/dark';
+
+function initMap() {
+  map = new maplibregl.Map({
+    container: 'map',
+    style: STYLE_URL,
+    center: CFG.CENTER,
+    zoom: CFG.ZOOM,
+    pitch: CFG.PITCH,
+    bearing: CFG.BEARING,
+    maxBounds: CFG.BOUNDS,
+    antialias: true,
+  });
+
+  map.addControl(new maplibregl.NavigationControl({visualizePitch:true}), 'top-left');
+  map.addControl(new maplibregl.ScaleControl({maxWidth:120,unit:'metric'}), 'bottom-left');
+
+  map.on('load', onMapLoad);
+
+  // Fallback dacă stilul principal eșuează
+  map.on('error', e => {
+    if (e.error?.message?.includes('load') || e.error?.message?.includes('style')) {
+      console.warn('Stil principal eșuat, încerc fallback...');
+      tryFallbackStyle();
+    }
+  });
+}
+
+function onMapLoad() {
+  setLstat('CLĂDIRI 3D DIN OSM...');
+  add3DBuildings();
+  setLstat('SE ÎNCARCĂ SESIZĂRILE...');
+  loadIssues();
+  setTimeout(fadeLoader, 2000);
+}
+
+// ═══════════════════════════════════════════════
+// 3D BUILDINGS
+// ═══════════════════════════════════════════════
+function add3DBuildings() {
+  try {
+    const style  = map.getStyle();
+    const layers = style.layers || [];
+    const sources = style.sources || {};
+
+    // Găsim sursa vectorială corectă (OpenMapTiles / OpenFreeMap)
+    const srcKey = Object.keys(sources).find(k => {
+      const s = sources[k];
+      return s.type === 'vector' && (
+        (s.url  && (s.url.includes('openmaptiles') || s.url.includes('openfreemap') || s.url.includes('maptiler'))) ||
+        (s.tiles && s.tiles.some(t => t.includes('{z}/{x}/{y}')))
+      );
+    }) || Object.keys(sources).find(k => sources[k].type === 'vector');
+
+    if (!srcKey) { console.warn('Sursă vectorială negăsită'); return; }
+
+    // Layer de referință pentru inserție corectă (sub etichete)
+    const refLyr = layers.find(l =>
+      l.type === 'symbol' && (
+        (l['source-layer'] && ['place','place_label','poi'].some(s => l['source-layer'].includes(s))) ||
+        (l.id && l.id.includes('label'))
+      )
+    );
+
+    // Ștergem dacă există deja (după schimbare stil)
+    if (map.getLayer('3d-buildings')) map.removeLayer('3d-buildings');
+
+    map.addLayer({
+      id: '3d-buildings',
+      type: 'fill-extrusion',
+      source: srcKey,
+      'source-layer': 'building',
+      minzoom: 12,
+      paint: {
+        'fill-extrusion-color': [
+          'interpolate', ['linear'],
+          ['coalesce',['get','render_height'],['get','height'],5],
+          0,  '#0d1520',
+          8,  '#111c2a',
+          20, '#162236',
+          50, '#1a2840',
+          100,'#1e2e4a',
+        ],
+        'fill-extrusion-height': [
+          'interpolate', ['linear'], ['zoom'],
+          12, 0,
+          13.5, ['coalesce',['get','render_height'],['get','height'],5]
+        ],
+        'fill-extrusion-base': [
+          'interpolate', ['linear'], ['zoom'],
+          12, 0,
+          13.5, ['coalesce',['get','render_min_height'],['get','min_height'],0]
+        ],
+        'fill-extrusion-opacity': [
+          'interpolate', ['linear'], ['zoom'],
+          12, 0,
+          13, 0.85,
+          16, 0.92,
+        ],
+      }
+    }, refLyr?.id);
+
+    console.log(`✓ 3D buildings adăugate din sursa "${srcKey}"`);
+  } catch(e) {
+    console.warn('3D buildings error:', e.message);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// FALLBACK STYLE (dacă OpenFreeMap nu e disponibil)
+// ═══════════════════════════════════════════════
+async function tryFallbackStyle() {
+  // Stil inline bazat pe OSM raster + clădiri 3D custom via Overpass
+  const rasterStyle = {
+    version: 8,
+    sources: {
+      'osm-raster': {
+        type: 'raster',
+        tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+        tileSize: 256,
+        attribution: '© OpenStreetMap contributors',
+        maxzoom: 19,
+      },
+    },
+    layers: [{
+      id: 'background',
+      type: 'background',
+      paint: { 'background-color': '#0a0c10' }
+    },{
+      id: 'osm',
+      type: 'raster',
+      source: 'osm-raster',
+      paint: {
+        'raster-opacity': 0.55,
+        'raster-hue-rotate': 180,
+        'raster-brightness-min': 0,
+        'raster-brightness-max': 0.25,
+        'raster-saturation': -0.8,
+      }
+    }],
+  };
+
+  map.setStyle(rasterStyle);
+  map.once('styledata', () => {
+    // Adaugă clădiri OSM via Overpass pentru Satu Mare
+    fetchOverpassBuildings();
+  });
+}
+
+async function fetchOverpassBuildings() {
+  try {
+    setLstat('SE DESCARCĂ CLĂDIRILE DIN OSM...');
+    const bbox = '47.71,22.72,47.88,23.05';
+    const query = `[out:json][timeout:30];(way["building"](${bbox});relation["building"](${bbox}););out geom;`;
+    const res = await fetch('https://overpass-api.de/api/interpreter', {
+      method: 'POST',
+      body: `data=${encodeURIComponent(query)}`,
+    });
+    const data = await res.json();
+
+    const features = data.elements
+      .filter(el => el.geometry || el.members)
+      .map(el => {
+        let coords = [];
+        if (el.type === 'way' && el.geometry) {
+          coords = [el.geometry.map(p => [p.lon, p.lat])];
+        }
+        if (!coords.length) return null;
+        const h = parseFloat(el.tags?.height || el.tags?.['building:height'] || el.tags?.levels * 3 || 6);
+        return {
+          type: 'Feature',
+          geometry: { type: 'Polygon', coordinates: coords },
+          properties: { height: h, color: h > 30 ? '#1a2840' : h > 15 ? '#141e2e' : '#0f1520' }
+        };
+      }).filter(Boolean);
+
+    map.addSource('overpass-buildings', {
+      type: 'geojson',
+      data: { type: 'FeatureCollection', features }
+    });
+
+    map.addLayer({
+      id: '3d-buildings',
+      type: 'fill-extrusion',
+      source: 'overpass-buildings',
+      paint: {
+        'fill-extrusion-color': ['get','color'],
+        'fill-extrusion-height': ['get','height'],
+        'fill-extrusion-base': 0,
+        'fill-extrusion-opacity': 0.85,
+      }
+    });
+
+    console.log(`✓ ${features.length} clădiri OSM încărcate via Overpass`);
+  } catch(e) {
+    console.warn('Overpass fallback error:', e.message);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// DATA — Firebase Realtime Database
+// ═══════════════════════════════════════════════
+const FB_URL = 'https://civicmap-satumare-default-rtdb.europe-west1.firebasedatabase.app';
+
+async function fbGet() {
+  const r = await fetch(`${FB_URL}/issues.json`);
+  const data = await r.json();
+  if (!data) return [];
+  // Firebase returnează obiect cu keys, convertim în array
+  return Object.values(data).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+}
+
+async function fbSaveIssue(issue) {
+  // Salvăm/actualizăm o singură sesizare după ID
+  await fetch(`${FB_URL}/issues/${issue.id}.json`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(issue),
+  });
+}
+
+async function fbDeleteIssue(id) {
+  await fetch(`${FB_URL}/issues/${id}.json`, { method: 'DELETE' });
+}
+
+async function fbInit() {
+  // Populăm cu date demo dacă baza e goală
+  const today = new Date().toISOString().split('T')[0];
+  for (const d of DEMO) {
+    const id = crypto.randomUUID();
+    const issue = { ...d, id, data: today, created_at: new Date().toISOString() };
+    await fetch(`${FB_URL}/issues/${id}.json`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(issue),
+    });
+  }
+}
+
+async function deleteIssue(id, event) {
+  if (event) { event.stopPropagation(); event.preventDefault(); }
+  if (!isAdmin) { toast('🔐 Trebuie să fii admin!', 'activ'); return; }
+  if (!confirm('Ștergi definitiv această sesizare?')) return;
+  // Ștergem din Firebase
+  await fbDeleteIssue(id).catch(e => console.warn('Delete error:', e));
+  // Ștergem local
+  issues = issues.filter(x => x.id !== id);
+  if (markers[id]) { markers[id].remove(); delete markers[id]; }
+  renderList(); updateStats();
+  toast('🗑 Sesizare ștearsă definitiv', 'activ');
+}
+
+async function loadIssues() {
+  document.getElementById('rb').classList.add('spin');
+  try {
+    let data = await fbGet();
+    // Prima rulare — populăm cu demo
+    if (data.length === 0) {
+      await fbInit();
+      data = await fbGet();
+    }
+    issues = data;
+    syncMarkers(); renderList(); updateStats();
+    document.getElementById('ut').textContent = 'Actualizat: ' + new Date().toLocaleTimeString('ro-RO');
+  } catch(e) {
+    console.warn('Firebase error:', e.message);
+    if (!issues.length) {
+      issues = JSON.parse(JSON.stringify(DEMO));
+      syncMarkers(); renderList(); updateStats();
+    }
+  }
+  document.getElementById('rb').classList.remove('spin');
+}
+
+async function geocode(addr) {
+  const GOOGLE_KEY = 'AIzaSyDUSpfaTUCxDbVlW6ctzPw812P5BcHnDiQ';
+  const fullAddr = addr.includes('Satu Mare') ? addr : addr + ', Satu Mare, Romania';
+
+  // Google Maps Geocoding API — cel mai precis pentru România
+  try {
+    const q = encodeURIComponent(fullAddr);
+    const r = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${q}&key=${GOOGLE_KEY}&language=ro&region=ro&bounds=47.70,22.70|47.88,23.05`
+    );
+    const d = await r.json();
+    if (d.status === 'OK' && d.results[0]) {
+      const loc = d.results[0].geometry.location;
+      return { lat: loc.lat, lng: loc.lng };
+    }
+    console.warn('Google geocode status:', d.status);
+  } catch(e) {
+    console.warn('Google geocode failed:', e.message);
+  }
+
+  // Fallback Nominatim dacă Google eșuează
+  try {
+    const q = encodeURIComponent(fullAddr);
+    const r = await fetch(
+      `https://nominatim.openstreetmap.org/search?q=${q}&format=json&limit=1&countrycodes=ro`,
+      { headers:{'Accept-Language':'ro','User-Agent':'CivicMapSatuMare/1.0'} }
+    );
+    const d = await r.json();
+    if (d[0]) return { lat: +d[0].lat, lng: +d[0].lon };
+  } catch(e) { console.warn('Nominatim fallback failed:', e.message); }
+
+  return null;
+}
+
+// ═══════════════════════════════════════════════
+// MARKERS
+// ═══════════════════════════════════════════════
+function mkEl(issue) {
+  const c = SC[issue.status]||'#fff';
+  const el = document.createElement('div');
+  el.style.cssText = `width:28px;height:28px;background:${c};border:2.5px solid rgba(255,255,255,.22);border-radius:50% 50% 50% 0;transform:rotate(-45deg);cursor:pointer;box-shadow:0 0 0 4px ${c}44,0 4px 16px rgba(0,0,0,.65);transition:transform .2s,box-shadow .2s,opacity .5s,scale .5s;`;
+  el.onmouseenter = () => { el.style.transform='rotate(-45deg) scale(1.35)'; el.style.boxShadow=`0 0 0 7px ${c}55,0 6px 24px rgba(0,0,0,.75)`; };
+  el.onmouseleave = () => { el.style.transform='rotate(-45deg) scale(1)';    el.style.boxShadow=`0 0 0 4px ${c}44,0 4px 16px rgba(0,0,0,.65)`; };
+  return el;
+}
+
+function syncMarkers() {
+  // Remove markers for issues no longer in list, or now rezolvat
+  Object.keys(markers).forEach(id => {
+    const issue = issues.find(i=>i.id===id);
+    if (!issue || issue.status === 'rezolvat') {
+      markers[id].remove();
+      delete markers[id];
+    }
+  });
+  // Add/update markers — skip rezolvat
+  issues.forEach(issue => {
+    if (!issue.lat || !issue.lng) return;
+    if (issue.status === 'rezolvat') return;   // ← pinul nu apare pentru rezolvate
+    if (markers[issue.id]) { markers[issue.id].remove(); delete markers[issue.id]; }
+    const el = mkEl(issue);
+    const popup = new maplibregl.Popup({offset:20,closeButton:true,maxWidth:'300px'}).setHTML(popupHTML(issue));
+    const m = new maplibregl.Marker({element:el,anchor:'bottom'}).setLngLat([issue.lng,issue.lat]).setPopup(popup).addTo(map);
+    el.onclick = () => { highlightCard(issue.id); flyTo(issue); };
+    markers[issue.id] = m;
+  });
+}
+
+function popupHTML(i) {
+  const c = SC[i.status]||'#fff';
+  return `<div class="ptype">${i.tip}</div>
+<div class="pdesc">${i.descriere}</div>
+<div class="pfoot"><span>📍 ${i.locatie.split(',')[0]}</span><span style="color:${c};font-weight:700">${slabel(i.status)}</span></div>
+${i.admin_comment ? `<div style="margin-top:8px;padding:8px;background:rgba(0,212,255,.1);border-left:2px solid var(--accent);border-radius:4px;font-size:10px;color:var(--accent);line-height:1.4;">💬 ${i.admin_comment}</div>` : ''}
+${isAdmin ? `<select class="psel" onchange="updateStatus('${i.id}',this.value); this.value='${i.status}'">
+  <option value="activ"    ${i.status==='activ'   ?'selected':''}>🔴 ACTIV</option>
+  <option value="in_lucru"    ${i.status==='in_lucru'   ?'selected':''}>🟡 ÎN LUCRU</option>
+  <option value="rezolvat" ${i.status==='rezolvat'?'selected':''}>🟢 REZOLVAT</option>
+</select>` : ''}`;
+}
+
+function slabel(s){ return {activ:'ACTIV',lucru:'ÎN LUCRU',rezolvat:'REZOLVAT'}[s]||s; }
+
+// ═══════════════════════════════════════════════
+// LIST
+// ═══════════════════════════════════════════════
+function renderList() {
+  const el = document.getElementById('ilist');
+  const list = getFiltered();
+  if (!list.length) { el.innerHTML='<div class="empty-st">NICIO SESIZARE<br/>⊘</div>'; return; }
+  el.innerHTML = list.map(i=>`
+    <div class="icard s-${i.status}" id="card-${i.id}" onclick="selectIssue('${i.id}')">
+      <div class="itop"><div class="itype">${i.tip}</div><div class="sbadge ${i.status}">${slabel(i.status)}</div></div>
+      <div class="idesc">${i.descriere}</div>
+      <div class="imeta"><div class="iloc">📍 ${i.locatie.split(',')[0]}</div><div class="idate">${fdate(i.data)}</div></div>
+      ${i.admin_comment ? `<div style="margin-top:8px;padding:8px;background:rgba(0,212,255,.1);border-left:2px solid var(--accent);border-radius:4px;font-size:10px;color:var(--accent);line-height:1.4;">💬 ${i.admin_comment}</div>` : ''}
+      ${getPhotoGalleryHTML(i)}
+      ${isAdmin
+        ? `<select class="ssel" onchange="updateStatus('${i.id}',this.value); this.value='${i.status}'" onclick="event.stopPropagation()">
+        <option value="activ"    ${i.status==='activ'   ?'selected':''}>🔴 ACTIV</option>
+        <option value="in_lucru"    ${i.status==='in_lucru'   ?'selected':''}>🟡 ÎN LUCRU</option>
+        <option value="rezolvat" ${i.status==='rezolvat'?'selected':''}>🟢 REZOLVAT</option>
+      </select>
+      <button class="delbtn" onclick="deleteIssue('${i.id}',event)">🗑 ȘTERGE</button>`
+        : ''}
+    </div>`).join('');
+}
+
+function getFiltered() {
+  return issues.filter(i => {
+    const mf = curFilter==='toate' || i.status===curFilter;
+    const q  = searchQ.toLowerCase();
+    const ms = !q || [i.locatie,i.tip,i.descriere].some(s=>s.toLowerCase().includes(q));
+    return mf && ms;
+  });
+}
+
+function setFilter(el) {
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active'); curFilter=el.dataset.f; renderList();
+}
+function filterIssues() {
+  searchQ = document.getElementById('sinp').value;
+  renderList();
+}
+
+function updateStats() {
+  document.getElementById('ca').textContent = issues.filter(i=>i.status==='activ').length;
+  document.getElementById('cl').textContent = issues.filter(i=>i.status==='lucru').length;
+  document.getElementById('cr').textContent = issues.filter(i=>i.status==='rezolvat').length;
+}
+
+function fdate(d) { try{return new Date(d).toLocaleDateString('ro-RO',{day:'2-digit',month:'short'})}catch{return d||'—'} }
+
+// ═══════════════════════════════════════════════
+// INTERACTIONS
+// ═══════════════════════════════════════════════
+function selectIssue(id) {
+  const i = issues.find(x=>x.id===id); if(!i) return;
+  highlightCard(id); if(i.lat) flyTo(i); if(markers[id]) markers[id].togglePopup();
+}
+
+function highlightCard(id) {
+  document.querySelectorAll('.icard').forEach(c=>c.classList.remove('sel'));
+  const c=document.getElementById('card-'+id);
+  if(c){c.classList.add('sel');c.scrollIntoView({behavior:'smooth',block:'nearest'});}
+}
+
+function flyTo(i) {
+  if(!i.lat||!map) return;
+  map.flyTo({center:[i.lng,i.lat],zoom:16.5,pitch:62,bearing:Math.random()*40-20,duration:1400,essential:true});
+}
+
+async function updateStatus(id, status) {
+  if (!isAdmin) { toast('🔐 Doar adminul poate schimba statusul!', 'activ'); return; }
+  const i=issues.find(x=>x.id===id); if(!i) return;
+  // Deschide modal pentru comentariu/mesaj
+  showStatusUpdateModal(i);
+}
+
+function showStatusUpdateModal(issue) {
+  const modalId = 'status-modal-' + issue.id;
+  const existing = document.getElementById(modalId);
+  if (existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = modalId;
+  modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,12,16,.95);display:flex;align-items:center;justify-content:center;z-index:10000;padding:20px;overflow-y:auto';
+  modal.onclick = (e) => { if(e.target===modal) modal.remove(); };
+
+  const statusLabels = { activ: '🔴 ACTIV', in_lucru: '🟡 ÎN LUCRU', rezolvat: '🟢 REZOLVAT' };
+  const statusColors = { activ: 'var(--red)', in_lucru: 'var(--yellow)', rezolvat: 'var(--green)' };
+
+  modal.innerHTML = `
+    <div class="mbox" style="max-width:520px;max-height:90vh;overflow-y:auto" onclick="event.stopPropagation()">
+      <button class="mcls" onclick="document.getElementById('${modalId}').remove()">✕</button>
+      <div class="mtit">ACTUALIZARE STATUS</div>
+      
+      <div style="margin:14px 0;padding:12px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent)">
+        <div style="font-size:11px;color:var(--text-muted);font-family:var(--mono)">SESIZARE</div>
+        <div style="font-weight:600;color:var(--text);margin-top:4px">${issue.tip}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px">📍 ${issue.locatie}</div>
+        <div style="font-size:10px;color:var(--text-muted);margin-top:4px">Status actual: <span style="color:${statusColors[issue.status]}">${statusLabels[issue.status]}</span></div>
+      </div>
+
+      <div class="field">
+        <label>SCHIMBĂ STATUS</label>
+        <select id="status-select-${issue.id}">
+          <option value="activ" ${issue.status==='activ'?'selected':''}>🔴 ACTIV</option>
+          <option value="in_lucru" ${issue.status==='in_lucru'?'selected':''}>🟡 ÎN LUCRU</option>
+          <option value="rezolvat" ${issue.status==='rezolvat'?'selected':''}>🟢 REZOLVAT</option>
+        </select>
+      </div>
+
+      ${issue.email ? `
+      <div class="field" style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:8px;padding:12px;">
+        <label style="color:var(--accent);font-size:11px;letter-spacing:.05em">📧 COMENTARIU PENTRU UTILIZATOR</label>
+        <p style="font-size:10px;color:var(--text-muted);margin:6px 0 8px 0">Utilizatorul primește email cu comentariul tău.</p>
+        <textarea id="admin-comment-${issue.id}" rows="4" placeholder="ex: Viceprimarul Raul Babtan s-a ocupat. Echipa în teren mâine." 
+          style="width:100%;background:var(--surface2);border:1px solid rgba(0,212,255,.3);border-radius:6px;padding:10px;color:var(--text);font-family:var(--sans);font-size:12px;resize:vertical;outline:none;box-sizing:border-box;"></textarea>
+      </div>
+      ` : `
+      <div style="background:rgba(255,100,100,.08);border:1px solid rgba(255,100,100,.2);border-radius:8px;padding:12px;margin:12px 0;font-size:11px;color:var(--text-muted);">
+        ⚠️ Utilizatorul NU a furnizat email — nu poate primi notificări
+      </div>
+      `}
+
+      <button class="btn btn-a" style="width:100%;padding:12px;margin-top:14px;font-weight:600" onclick="applyStatusUpdate('${issue.id}', '${issue.email}')">
+        SALVEAZĂ STATUS ${issue.email ? '+ TRIMITE EMAIL' : ''}
+      </button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+async function applyStatusUpdate(issueId, hasEmail) {
+  if (!isAdmin) return;
+  const i = issues.find(x => x.id === issueId);
+  if (!i) return;
+
+  const newStatus = document.getElementById('status-select-' + issueId).value;
+  const comment = document.getElementById('admin-comment-' + issueId)?.value?.trim() || '';
+
+  i.status = newStatus;
+  
+  // Salvează comentariul dacă există
+  if (comment) {
+    i.admin_comment = comment;
+    i.admin_comment_date = new Date().toISOString();
+  }
+
+  // Salvează în Firebase
+  await fbSaveIssue(i).catch(e => console.warn('Firebase save error:', e));
+
+  // Trimite email cu comentariu dacă utilizatorul a dat email și admin a scris mesaj
+  if (hasEmail && comment) {
+    await sendStatusEmailWithComment(i, newStatus, comment);
+  } else if (hasEmail) {
+    // Trimite doar schimbarea de status
+    await sendStatusEmail(i, newStatus);
+  }
+
+  // Gestionează ștergerea dacă e rezolvat
+  if (newStatus === 'rezolvat') {
+    await fbDeleteIssue(issueId).catch(e => console.warn('Firebase delete error:', e));
+    issues = issues.filter(x => x.id !== issueId);
+    if (markers[issueId]) {
+      const el = markers[issueId].getElement();
+      el.style.opacity = '0';
+      el.style.transform = 'rotate(-45deg) scale(0)';
+      setTimeout(() => {
+        if (markers[issueId]) { markers[issueId].remove(); delete markers[issueId]; }
+      }, 500);
+    }
+    renderList(); updateStats();
+    toast('✓ Status → REZOLVAT + email trimis!', 'rezolvat');
+  } else {
+    syncMarkers(); renderList(); updateStats();
+    toast(`✓ Status → ${slabel(newStatus)} ${comment ? '+ Comentariu' : ''}`, newStatus);
+  }
+
+  // Închide modal
+  document.querySelectorAll('[id^="status-modal"]').forEach(m => m.remove());
+}
+
+async function sendStatusEmailWithComment(issue, newStatus, comment) {
+  const statusLabel = { activ: '🔴 ACTIV', in_lucru: '🟡 ÎN LUCRU', rezolvat: '🟢 REZOLVAT' };
+  try {
+    await emailjs.send(EMAILJS.SERVICE_ID, EMAILJS.TEMPLATE_STATUS, {
+      to_email: issue.email,
+      email_utilizator: issue.email,
+      locatie: issue.locatie,
+      tip: issue.tip,
+      status_nou: statusLabel[newStatus] || newStatus,
+      mesaj_status: comment,
+    });
+    console.log('✅ Email cu comentariu trimis la:', issue.email);
+  } catch (e) {
+    console.warn('❌ Email eșuat:', e);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// MAP CONTROLS
+// ═══════════════════════════════════════════════
+function resetView() { map.flyTo({center:CFG.CENTER,zoom:CFG.ZOOM,pitch:CFG.PITCH,bearing:CFG.BEARING,duration:1200}); }
+
+function toggleRotate() {
+  rotating=!rotating;
+  document.getElementById('brot').classList.toggle('act',rotating);
+  if(rotating){ step(); } else { cancelAnimationFrame(rafId); }
+  function step(){ if(!rotating)return; map.setBearing(map.getBearing()+0.15); rafId=requestAnimationFrame(step); }
+}
+
+function toggle3D() {
+  show3D=!show3D;
+  document.getElementById('b3d').classList.toggle('act',show3D);
+  if(map.getLayer('3d-buildings')) map.setLayoutProperty('3d-buildings','visibility',show3D?'visible':'none');
+  map.easeTo({pitch:show3D?52:0,duration:600});
+}
+
+// ═══════════════════════════════════════════════
+// PANEL & MODAL
+// ═══════════════════════════════════════════════
+function togglePanel() {
+  panelOn=!panelOn;
+  document.getElementById('panel').classList.toggle('hidden',!panelOn);
+  document.getElementById('ptog').classList.toggle('off',!panelOn);
+  document.getElementById('ptbtn').textContent=panelOn?'❯':'❮';
+}
+
+// ═══════════════════════════════════════════════
+// STATISTICI
+// ═══════════════════════════════════════════════
+let chartMonthly = null;
+let chartTypes = null;
+
+// ═══════════════════════════════════════════════
+// MINI-MAP CU PIN DRAGGABLE
+// ═══════════════════════════════════════════════
+let miniMap = null;
+let draggableMarker = null;
+let addrTimer = null;
+
+function onAddrInput() {
+  // Debounce — așteptăm 800ms după ce utilizatorul termină de scris
+  clearTimeout(addrTimer);
+  const val = document.getElementById('fl').value.trim();
+  if (val.length < 4) {
+    hideMiniMap();
+    return;
+  }
+  setAddrStatus('⌛ Se caută adresa...', 'var(--text-muted)');
+  addrTimer = setTimeout(() => geocodeAndShowMiniMap(val), 800);
+}
+
+async function geocodeAndShowMiniMap(addr) {
+  const coords = await geocode(addr + ', Satu Mare');
+  if (!coords) {
+    setAddrStatus('⚠️ Adresa nu a fost găsită — mută pinul manual', 'var(--yellow)');
+    // Arată mini-map centrat pe Satu Mare
+    showMiniMap(CFG.CENTER[1], CFG.CENTER[0]);
+    return;
+  }
+  setAddrStatus('✓ Adresă găsită — trage pinul pentru precizie maximă', 'var(--green)');
+  pickedLat = coords.lat;
+  pickedLng = coords.lng;
+  showMiniMap(coords.lat, coords.lng);
+}
+
+function setAddrStatus(msg, color) {
+  const el = document.getElementById('addr-status');
+  el.style.display = 'block';
+  el.style.color = color;
+  el.textContent = msg;
+}
+
+function showMiniMap(lat, lng) {
+  const wrap = document.getElementById('mini-map-wrap');
+  wrap.style.display = 'block';
+
+  if (!miniMap) {
+    miniMap = new maplibregl.Map({
+      container: 'mini-map',
+      style: 'https://tiles.openfreemap.org/styles/dark',
+      center: [lng, lat],
+      zoom: 16,
+      pitch: 0,
+      attributionControl: false,
+    });
+
+    miniMap.on('load', () => {
+      // Pin draggable roșu
+      const el = document.createElement('div');
+      el.style.cssText = 'width:28px;height:28px;background:#ff4757;border:3px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);cursor:grab;box-shadow:0 0 0 4px rgba(255,71,87,0.4),0 4px 16px rgba(0,0,0,0.6);';
+      draggableMarker = new maplibregl.Marker({ element: el, anchor: 'bottom', draggable: true })
+        .setLngLat([lng, lat])
+        .addTo(miniMap);
+
+      draggableMarker.on('dragend', () => {
+        const pos = draggableMarker.getLngLat();
+        pickedLat = pos.lat;
+        pickedLng = pos.lng;
+        setAddrStatus('✓ Poziție ajustată manual', 'var(--accent)');
+      });
+    });
+  } else {
+    miniMap.setCenter([lng, lat]);
+    if (draggableMarker) draggableMarker.setLngLat([lng, lat]);
+  }
+}
+
+function hideMiniMap() {
+  document.getElementById('mini-map-wrap').style.display = 'none';
+  document.getElementById('addr-status').style.display = 'none';
+  pickedLat = null; pickedLng = null;
+}
+
+function toggleStats() {
+  const modal = document.getElementById('stats-modal');
+  const visible = modal.style.display === 'flex';
+  modal.style.display = visible ? 'none' : 'flex';
+  if (!visible) renderStats();
+}
+
+function renderStats() {
+  if (!issues.length) return;
+
+  // Summary
+  document.getElementById('stat-total').textContent = issues.length;
+  document.getElementById('stat-active').textContent = issues.filter(i=>i.status==='activ'||i.status==='lucru').length;
+  document.getElementById('stat-resolved').textContent = issues.filter(i=>i.status==='rezolvat').length;
+
+  // ── Grafic pe lună ──
+  const monthMap = {};
+  issues.forEach(i => {
+    const d = new Date(i.data || i.created_at);
+    if (isNaN(d)) return;
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    monthMap[key] = (monthMap[key]||0) + 1;
+  });
+  const sortedMonths = Object.keys(monthMap).sort();
+  const monthLabels = sortedMonths.map(k => {
+    const [y,m] = k.split('-');
+    return new Date(y, m-1).toLocaleDateString('ro-RO', {month:'short', year:'2-digit'});
+  });
+
+  const ctxM = document.getElementById('chart-monthly').getContext('2d');
+  if (chartMonthly) chartMonthly.destroy();
+  chartMonthly = new Chart(ctxM, {
+    type: 'bar',
+    data: {
+      labels: monthLabels,
+      datasets: [{
+        label: 'Sesizări',
+        data: sortedMonths.map(k => monthMap[k]),
+        backgroundColor: 'rgba(0,212,255,0.3)',
+        borderColor: '#00d4ff',
+        borderWidth: 2,
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.raw} sesizări` } }
+      },
+      scales: {
+        x: { ticks: { color: '#6b7280', font: { family: 'Space Mono', size: 10 } }, grid: { color: '#252830' } },
+        y: { ticks: { color: '#6b7280', font: { family: 'Space Mono', size: 10 }, stepSize: 1 }, grid: { color: '#252830' }, beginAtZero: true }
+      }
+    }
+  });
+
+  // ── Grafic pe tip ──
+  const typeMap = {};
+  issues.forEach(i => {
+    const tip = i.tip?.split(' ').slice(1).join(' ') || i.tip || 'Altele';
+    typeMap[tip] = (typeMap[tip]||0) + 1;
+  });
+  const typeLabels = Object.keys(typeMap);
+  const typeColors = ['#ff4757','#ffd32a','#2ed573','#00d4ff','#7c3aed','#ff6b81','#eccc68','#a29bfe','#55efc4'];
+
+  const ctxT = document.getElementById('chart-types').getContext('2d');
+  if (chartTypes) chartTypes.destroy();
+  chartTypes = new Chart(ctxT, {
+    type: 'doughnut',
+    data: {
+      labels: typeLabels,
+      datasets: [{
+        data: typeLabels.map(t => typeMap[t]),
+        backgroundColor: typeColors.slice(0, typeLabels.length).map(c => c+'99'),
+        borderColor: typeColors.slice(0, typeLabels.length),
+        borderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: { color: '#e8eaf0', font: { family: 'Space Mono', size: 10 }, padding: 12, boxWidth: 14 }
+        }
+      }
+    }
+  });
+}
+
+function toggleAdmin() {
+  if (isAdmin) {
+    fbAuth.signOut();
+    toast('Delogat din admin', '');
+  } else {
+    openLoginModal();
+  }
+}
+
+function openModal()  { document.getElementById('modal').style.display='flex'; }
+function closeModal() { document.getElementById('modal').style.display='none'; }
+
+// ═══════════════════════════════════════════════════════════
+// PHOTO UPLOAD
+// ═══════════════════════════════════════════════════════════
+let selectedPhotoFile = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const photoInput = document.getElementById('photo-input');
+  if (photoInput) {
+    photoInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        toast('❌ Poza prea mare (max 5MB)', 'activ');
+        photoInput.value = '';
+        return;
+      }
+      selectedPhotoFile = file;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        document.getElementById('photo-preview').innerHTML = 
+          `<img src="${ev.target.result}" style="max-width:100%;max-height:150px;border-radius:8px;border:2px solid var(--accent);">`;
+      };
+      reader.readAsDataURL(file);
+      toast('✅ Foto selectată!', 'rezolvat');
+    });
+  }
+});
+
+async function uploadPhotoToFirebase(issueId, file) {
+  if (!file) return null;
+  try {
+    const storage = firebase.storage();
+    const filename = `issues/${issueId}/${Date.now()}_${file.name}`;
+    const ref = storage.ref(filename);
+    const snapshot = await ref.put(file);
+    const url = await snapshot.ref.getDownloadURL();
+    return { url, tag: 'REPORT', date: new Date().toISOString() };
+  } catch(e) {
+    console.error('Photo upload error:', e);
+    toast('⚠️ Eroare upload foto', 'activ');
+    return null;
+  }
+}
+
+function getPhotoGalleryHTML(issue) {
+  if (!issue.photos || !issue.photos.length) return '';
+  return `<div style="margin-top:12px;padding:12px;background:var(--surface2);border-radius:8px;">
+    <small>📷 ${issue.photos.length} foto(i):</small>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px;margin-top:8px;">
+      ${issue.photos.map(p => `<img src="${p.url}" style="width:100%;height:80px;object-fit:cover;border-radius:4px;cursor:pointer;" onclick="window.open('${p.url}')">`).join('')}
+    </div>
+  </div>`;
+}
+
+async function submitIssue() {
+  const loc=document.getElementById('fl').value.trim();
+  const catKey=document.getElementById('fc').value;
+  let tip=document.getElementById('ft').value.trim();
+  const desc=document.getElementById('fd').value.trim();
+  
+  // Validare
+  if(!loc||!catKey||!desc){toast('Completați locație, categorie și descriere!','activ');return;}
+  
+  // Dacă nu e selectată subcategorie, folosim categoria
+  if(!tip && catKey && CATEGORIES[catKey]) {
+    tip = CATEGORIES[catKey].name;
+  }
+  
+  let finalLat, finalLng;
+  if (pickedLat && pickedLng) {
+    finalLat = pickedLat;
+    finalLng = pickedLng;
+    toast('📍 Locație exactă salvată!', 'rezolvat');
+  } else {
+    toast('⌛ Geocodare adresă...', 'lucru');
+    const coords = await geocode(loc+', Satu Mare');
+    finalLat = coords?.lat || CFG.CENTER[1];
+    finalLng = coords?.lng || CFG.CENTER[0];
+  }
+  const emailUtilizator = document.getElementById('fe')?.value?.trim() || '';
+  const issue = {
+    id: String(Date.now()), locatie: loc+', Satu Mare', tip, descriere: desc,
+    data: new Date().toISOString().split('T')[0], status: 'activ',
+    lat: finalLat, lng: finalLng,
+    created_at: new Date().toISOString(),
+    email: emailUtilizator || null,
+    department: getDepartment(tip),
+    category: catKey,
+    photos: []
+  };
+  
+  // Upload photo if selected
+  if (selectedPhotoFile) {
+    toast('📤 Uploadez foto...', 'lucru');
+    const photoData = await uploadPhotoToFirebase(issue.id, selectedPhotoFile);
+    if (photoData) {
+      issue.photos.push(photoData);
+      selectedPhotoFile = null;
+      document.getElementById('photo-input').value = '';
+      document.getElementById('photo-preview').innerHTML = '';
+    }
+  }
+  
+  issues.unshift(issue);
+  try {
+    await fbSaveIssue(issue);
+    toast('✓ Sesizare adăugată cu succes!', 'rezolvat');
+  } catch(e) {
+    console.error('Firebase save error:', e);
+    toast('⚠️ Eroare la salvare: ' + e.message, 'activ');
+    return;
+  }
+  // Trimitem email de confirmare dacă utilizatorul a furnizat adresa
+  if (emailUtilizator) sendConfirmEmail(issue, emailUtilizator);
+  // Trimitem notificare ADMIN despre sesizarea NOUĂ
+  sendAdminNewIssueEmail(issue);
+  syncMarkers(); renderList(); updateStats();
+  closeModal(); flyTo(issue);
+  ['fl','fd','fe'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('ft').value='';
+  document.getElementById('fc').value='';
+  // Reset mini-map și pick state
+  pickedLat=null; pickedLng=null; pickMode=false;
+  hideMiniMap();
+  if (draggableMarker) { draggableMarker.remove(); draggableMarker=null; }
+  if (miniMap) { miniMap.remove(); miniMap=null; }
+}
+
+// ═══════════════════════════════════════════════
+// POLLING & UTILS
+// ═══════════════════════════════════════════════
+function startPolling() {
+  // Polling activ întotdeauna — D1 e sursa de adevăr pentru toți utilizatorii
+  setInterval(loadIssues, CFG.POLL_MS);
+}
+function manualRefresh() { loadIssues(); }
+
+function toast(msg, type='') {
+  const cc={activ:SC.activ,lucru:SC.lucru,rezolvat:SC.rezolvat,'':'var(--accent)'};
+  const c=cc[type]||cc[''];
+  const el=document.createElement('div');
+  el.className='tmsg'; el.style.cssText=`border-color:${c};color:${c}`; el.textContent=msg;
+  document.getElementById('toast').appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);},3000);
+}
+
+function setLstat(t) { const el=document.getElementById('lstat'); if(el) el.textContent=t; }
+function fadeLoader() { const l=document.getElementById('loading'); l.classList.add('out'); setTimeout(()=>l.remove(),600); }
+
+// ═══════════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════════
+// Actualizăm butonul admin dacă sesiunea e activă
+if (isAdmin) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('admin-btn');
+    if (btn) { btn.style.color='var(--accent)'; btn.style.borderColor='var(--accent)'; }
+  });
+}
+// Inițializăm totul după ce DOM-ul e gata
+document.addEventListener('DOMContentLoaded', () => { 
+  initAuth(); 
+  initEmailJS();
+  initMap();
+  startPolling();
+});
+</script>
+<script>
+// ============================================
+// OFFLINE APP + INSTALL - NO FILES NEEDED!
+// ============================================
+
+// 1. INLINE SERVICE WORKER
+if ('serviceWorker' in navigator) {
+  const swScript = `
+    const CACHE = 'sm-v1';
+    self.addEventListener('install', e => {
+      e.waitUntil(caches.open(CACHE).then(c => {
+        c.addAll(['/']); // Cache home page
+      }));
+      self.skipWaiting();
+    });
+    self.addEventListener('activate', e => {
+      e.waitUntil(caches.keys().then(keys => 
+        Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+      ));
+      self.clients.claim();
+    });
+    self.addEventListener('fetch', e => {
+      e.respondWith(
+        caches.match(e.request)
+          .then(r => r || fetch(e.request).then(res => {
+            if (!res.ok) return res;
+            const clone = res.clone();
+            caches.open(CACHE).then(c => c.put(e.request, clone));
+            return res;
+          }))
+          .catch(() => caches.match('/'))
+      );
+    });
+  `;
+  
+  try {
+    const blob = new Blob([swScript], {type: 'application/javascript'});
+    const swUrl = URL.createObjectURL(blob);
+    navigator.serviceWorker.register(swUrl).then(
+      reg => console.log('✅ Offline ready'),
+      err => console.warn('SW error:', err)
+    );
+  } catch(e) {
+    console.warn('SW not available');
+  }
+}
+
+// 2. INSTALL PROMPT
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // Show install button
+  const btn = document.createElement('div');
+  btn.innerHTML = `
+    <div style="position:fixed;bottom:30px;right:20px;z-index:9999;padding:12px 16px;background:linear-gradient(135deg,#00d4ff,#7c3aed);border-radius:12px;color:#000;font-family:monospace;cursor:pointer;font-weight:bold;box-shadow:0 8px 24px rgba(0,212,255,.3);font-size:12px" onclick="if(window.deferredPrompt){window.deferredPrompt.prompt();window.deferredPrompt.userChoice.then(()=>this.remove())}">
+      📱 INSTALEAZĂ APP
+    </div>
+  `;
+  document.body.appendChild(btn);
+  window.deferredPrompt = deferredPrompt;
+});
+
+// 3. APP INSTALLED EVENT
+window.addEventListener('appinstalled', () => {
+  console.log('✅ App installed!');
+});
+
+// 4. ADD MANIFEST VIA SCRIPT
+const manifest = {
+  "name": "SatuMareLive — Monitor Urban",
+  "short_name": "SatuMareLive",
+  "description": "Raportează probleme urbane",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0c10",
+  "theme_color": "#00d4ff",
+  "icons": [{
+    "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%23000a14' width='192' height='192'/><circle cx='96' cy='96' r='80' fill='%2300d4ff'/></svg>",
+    "sizes": "192x192",
+    "type": "image/svg+xml"
+  }]
+};
+
+// Create manifest link if not exists
+if (!document.querySelector('link[rel="manifest"]')) {
+  const link = document.createElement('link');
+  link.rel = 'manifest';
+  link.href = 'data:application/json,' + encodeURIComponent(JSON.stringify(manifest));
+  document.head.appendChild(link);
+}
+
+console.log('✅ SatuMareLive PWA loaded');
+</script>
+</script>
+</body>
+</html>
